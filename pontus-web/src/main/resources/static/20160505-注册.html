@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body >
+		<!--页头-->
+		<div class="box_wrap header_box">
+			<div class="box_center">
+				<div class="header">
+					<span>客服电话：<span style="color: #ef7523;">400-1236-4562</span></span>
+					<div class="fr">
+						<a href="#">登录</a>
+						<a href="#">注册</a>
+						<a style="color: #ddd;">|</a>
+						<a href="#">消息</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--导航-->
+		<div class="box_wrap nav_box">
+			<div class="box_center cf">
+				<div class="logo fl">
+					<a href="#"><img src="images/logo.png"/></a>
+				</div>
+				<div class="nav fr">
+					<ul>
+						<li>
+							<a href="#">首页</a>
+						</li>
+						<li>
+							<a href="#">交易中心</a>
+						</li>
+						<li>
+							<a href="#">我的账户</a>
+						</li>
+						<li>
+							<a href="#">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<!--登录框-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center bgfff text_center" style="padding-top: 30px;">
+				<h3 class="fs_24">注册</h3>
+				<img src="images/images/zhuce1_03.jpg" class="mt_24"/>
+				<div class="sign_box">
+					<form action="" method="post">
+						<ul>
+							<li>
+								<label>手机号：</label>
+								<input type="text" class="ipt" name="" id="" value="" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li>
+								<label>密码：</label>
+								<input type="text" class="ipt" name="" id="" value="" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li>
+								<label>密码确认：</label>
+								<input type="text" class="ipt" name="" id="" value="" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li>
+								<label>验证码：</label>
+								<input type="text" class="ipt" name="" id="" value="" style="width: 190px;"/>
+								<div style="margin-left: 8px; display: inline-block;vertical-align: top; width: 136px;height: 42px;line-height: 42px; text-align: center; background-color: #f8f8f8;">
+									ddddd
+								</div>
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li>
+								<label>短信验证码：</label>
+								<input type="text" class="ipt" name="" id="" value="" style="width: 190px;margin-right: 8px;"/>
+								<input type="button" class="regbtn1" name="" id="" value="发送验证码" />
+								<input type="button" class="regbtn" name="" id="" value="发送验证码" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li style="margin-bottom: 8px;">
+								<label>电子邮箱<span class="col_999">(选填)</span>：</label>
+								<input type="text" class="ipt" name="" id="" value="" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li style="padding-left: 136px;">
+								<input type="checkbox" name="" id="" value="" />阅读并同意 <a href="#" class="col_blue a_line">《xxx平台服务协议》</a><a href="#" class="col_blue a_line">《免责声明》</a>
+							</li>
+							<li style="padding-left: 136px;">
+								<a href="#" class="ptbtn ptbtn_orange" style="width: 338px;line-height: 40px;font-size: 16px;">下一步</a>
+							</li>
+						</ul>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!--版权-->
+		<div class="copy_box">
+			版权所有 &copy;XXXXXXXX有限公司 沪ICP备XXXXXXXXXX
+		</div>
+		
+		<script type="text/javascript">
+			var copy = document.getElementsByClassName("copy_box")[0];
+			var copyH = copy.offsetTop;
+			var webH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(copyH<webH){
+				copy.style.position = "fixed";
+				copy.style.bottom = "0";
+			}
+		</script>
+		
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$("input").focus(function(){
+				$(this).css({borderColor:"#68b5ed"});
+			});
+			$("input").blur(function(){
+				$(this).css({borderColor:"#dadada"});
+			});
+		</script>
+		
+	</body>
+</html>

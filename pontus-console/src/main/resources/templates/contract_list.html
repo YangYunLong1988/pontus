@@ -1,0 +1,494 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+  <title>全部合同</title>
+</head>
+<body>
+<div layout:fragment="content">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+      <h1>
+        	全部合同
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <form onkeydown="submitForm(event)" id="listForm">
+              	 <p></p><input type="text" placeholder="取消只有一个text的时候form默认提交" class="hide"/>
+               <div class="row">
+				<div class="col-xs-2">
+					<div class="form-group">
+						<label>合同状态</label>
+						 <select name="status"
+							class="form-control select2 select2-hidden-accessible"
+							style="width: 100%;" tabindex="-1" aria-hidden="true">
+							<option selected="selected">全部</option>
+							<option>有效</option>
+							<option>无效</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<div class="form-group">
+						<label>资产来源</label>
+						 <select name="productResource"
+							class="form-control select2 select2-hidden-accessible"
+							style="width: 100%;" tabindex="-1" aria-hidden="true">
+							<option selected="selected">全部</option>
+							<option th:each="platform:${platforms}" th:text="${platform}" ></option>
+						</select>
+					</div>
+				</div>
+			    <div class="col-xs-3">
+					<div class="form-group">
+                		<label>搜索条件:</label>
+
+                		<div class="input-group">
+                  			<input type="text" placeholder="产品名称，证件号码，拥有人 合同编号" name="query" id="query" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" />
+                  			<div class="input-group-addon">
+                    			<i class="fa fa-search"></i>
+                  			</div>
+                		</div>
+                <!-- /.input group -->
+              		</div>
+			    </div>
+			    
+			    <div class="col-xs-2">
+					<div class="form-group">
+					<label>&nbsp;</label>
+						<div class="input-group">
+							<button type="button" onclick="search()" class="btn btn-primary"><i class="fa fa-search"> 搜索</i></button>
+							&nbsp;&nbsp;
+							<button type="reset" class="btn btn-primary"> 重置 </button>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-2 pull-right">
+					<div class="form-group pull-right">
+					<label>&nbsp;</label>
+						<div class="input-group">
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+						  <i class="glyphicon glyphicon-plus"> 新建</i>
+						</button>
+						</div>
+					</div>
+				</div>
+		      </div>
+		      </form>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>购买平台</th>
+                  <th>产品名称</th>
+                  <th>年化收益率(%)</th>
+                  <th>合同编号</th>
+                  <th>身份证号码</th>
+                  <th>姓名</th>
+                  <th>投资本金</th>
+                  <th>合同到期日</th>
+                  <th>录入员</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- Modal -->
+<div class="modal fade" id="myModal" data-backdrop="false" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <form class="form-horizontal" id="addForm">
+    <div class="modal-content" style="width: 700px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">新建</h4>
+      </div>
+      <div class="modal-body">
+		  <div class="form-group">
+		    <label for="investorName" class="col-sm-2 control-label">姓名</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="investorName" name="investorName" placeholder="必填项" />
+		    </div>
+		    <label for="inputPassword3" class="col-sm-2 control-label">购买平台</label>
+		    <div class="col-sm-4">
+		      <select name="platform"  id="platform"
+					class="form-control select2 select2-hidden-accessible"
+					style="width: 100%;" tabindex="-1" aria-hidden="true">
+					<option>请选择</option>
+					<option th:each="platform:${platforms}" th:text="${platform}" ></option>
+				</select>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="mobile" class="col-sm-2 control-label">手机号码</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="mobile" name="mobile"  />
+		    </div>
+		    <label for="contractCode" class="col-sm-2 control-label">合同编号</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="contractCode" name="contractCode" placeholder="必填项" />
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="certiNo" class="col-sm-2 control-label">身份证号码</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="certiNo" name="certiNo"  placeholder="必填项" />
+		    </div>
+		    <label for="interestStartDate" class="col-sm-2 control-label">起息日</label>
+		    <div class="col-sm-4">
+	            <div class='input-group date' id='interestStartDate'>
+	                <input type='text' class="form-control" name="interestStartDate"/>
+	                <span class="input-group-addon">
+	                    <span class="glyphicon glyphicon-calendar"></span>
+	                </span>
+	            </div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		   <label for="principal" class="col-sm-2 control-label">投资本金</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="principal" name="principal" placeholder="必填项" />
+		    </div>
+		    <label for="contractEndDate" class="col-sm-2 control-label">合同到期日</label>
+		    <div class="col-sm-4">
+	            <div class='input-group date' id='contractEndDate'>
+	                <input type='text' class="form-control" name="contractEndDate" />
+	                <span class="input-group-addon">
+	                    <span class="glyphicon glyphicon-calendar"></span>
+	                </span>
+	            </div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="productName" class="col-sm-2 control-label">产品名称</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="productName" name="productName"  />
+		    </div>
+		    <label for="totalAmount" class="col-sm-2 control-label">本息和</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="totalAmount" name="totalAmount"  placeholder="必填项"/>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="yearIrr" class="col-sm-2 control-label">年化收益率%</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="yearIrr" name="yearIrr"  placeholder="必填项" />
+		    </div>
+		    <label for="term" class="col-sm-2 control-label">期限</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="term" name="term"  />
+		    </div>
+		  </div>
+		  <div class="form-group">
+		     <label for="unPayedInterest" class="col-sm-2 control-label">未还利息</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="unPayedInterest" name="unPayedInterest" placeholder="必填项" />
+		    </div>
+		    <label for="paybackType" class="col-sm-2 control-label">还款方式</label>
+		    <div class="col-sm-4">
+		       <select name="paybackType" id="paybackType"
+					class="form-control select2 select2-hidden-accessible"
+					style="width: 100%;" tabindex="-1" aria-hidden="true">
+					<option>到期还本付息</option>
+					<option>每月付息到期还本</option>
+					<option>每季付息到期还本</option>
+					<option>每半年付息到期还本</option>
+				</select>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		     <label for="profit" class="col-sm-2 control-label">收益</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="profit" name="profit"  />
+		    </div>
+		     <label for="ensureType" class="col-sm-2 control-label">保障方式</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="ensureType" name="ensureType"  />
+		    </div>
+		  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-primary">保存</button>
+      </div>
+    </div>
+</form>
+  </div>
+</div>
+
+<!-- DataTables -->
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="/plugins/jQuery/jquery.validate.js"></script>
+<script src="/js/idCardNoUtil.js"></script>
+<script src="/bootstrap/js/zh-cn.js"></script>
+<!-- page script -->
+<script>
+function drawTable(queryData){
+	  $('#example2').DataTable({
+		  "serverSide": true,
+		  "paging": true,
+	      "lengthChange": false,
+	      "searching": false,
+	      "ordering": false,
+	      "destroy": true,
+	      "info": true,
+	      "autoWidth": false,
+		  "language": tableslanguage ,
+		  "ajax":{
+			  "url":"/contract/list",
+			  "type":"post",
+			  "data":queryData,
+			  "timeout":"15000",
+			  "error":handleAjaxError
+		  },
+		  "columns":[
+		             {"data":"id"},
+		             {"data":"platform"},
+		             {"data":"productName"},
+		             {"data":"yearIrr"},
+		             {"data":"contractCode"},
+		             {"data":"certiNo"},
+		             {"data":"investorName"},
+		             {"data":"principal"},
+		             {"data":function(data, type, row){
+	            	 			return moment(data.contractEndDate).format('YYYY-MM-DD');
+            		  			}
+		             },
+		             {"data":"createdBy"},
+		             {"data":"id",
+		              "render":function(data, type, row) {
+		            	  return '<a href="/contract/details/'+row.id+'">查看</a>';
+						} 
+		             }
+		             ]
+		});
+}
+function search(){
+	drawTable($("#listForm").serializeJson());
+	console.info($("#listForm").serializeJson());
+}
+  $(function () {
+	  $('.contract').addClass('active');
+	  $('.page').addClass('active');
+	  search();
+  });
+  /**回车提交**/
+  function submitForm(event) {
+	  if(event.keyCode==13){
+		  search();
+     }
+  }
+  
+  function add(){
+	  $('#myModal').modal('hide');
+	  $.post("/contract/add",$("#addForm").serializeJson(),function(data){
+			if (data.success){
+				$('#example2').DataTable().ajax.reload(null,false);
+				common.success(data.firstMessage);
+			}else{
+				common.danger(data.firstMessage);
+			}
+		})
+  }
+  
+  $(function(){
+	  $.validator.addMethod("regex", function(value, element, regexp) {
+			var check = false;
+			var re = new RegExp(regexp);
+			return this.optional(element) || re.test(value);
+		}, "Please check your input.");
+	// 身份证号码验证 
+	  $.validator.addMethod("isIdCardNo", function(value, element) { 
+	    return this.optional(element) || idCardNoUtil.checkIdCardNo(value);     
+	  }, "请正确输入您的身份证号码"); 
+	
+	  $.validator.addMethod("selectCheck", function(value, element) { 
+		    return this.optional(element) || value!='请选择';     
+		  }, "请选择购买平台");
+	// 提交时验证表单
+		var validator = $("#addForm").validate({
+			focusCleanup:true,
+			submitHandler:function(form){
+				add();
+	        },
+			errorPlacement: function(error, element) {
+				 element.parent().addClass("has-error");
+				 element.parent().attr("data-toggle","popover").attr("data-placement","top").attr("data-content",$(error).html());
+		    	 element.parent().popover('show');
+			},
+			success: function(label) {
+			    // set &nbsp; as text for IE
+			    var elementId = label.attr('id').replace('-error','');
+			    if($('#'+elementId).hasClass('has-error')){
+			    	$('#'+elementId).removeClass('has-error');
+			    	$('#'+elementId).popover('destroy');
+			    }
+			    $('#'+elementId).parent().removeClass('has-error');
+			    $('#'+elementId).parent().popover('destroy');
+			},
+			rules : {
+				platform:{
+					selectCheck:true
+				},
+				investorName:{
+					required:true,
+					maxlength : 10
+				},
+				certiNo:{
+					required:true,
+					isIdCardNo:true,
+					maxlength : 20
+				},
+				contractCode : {
+					maxlength : 20,
+					required : true ,
+					remote:{
+					    url: "/contract/existCheck",     //后台处理程序
+					    type: "post",               //数据发送方式
+					    dataType: "json",
+					    data:{
+					    	contractCode:function(){
+						    	return $("#contractCode").val();
+						    }
+					    }
+					}
+				},
+				mobile:{
+					regex:/^1\d{10}$/
+				},
+				principal : {
+					maxlength : 20,
+					required : true,
+					regex : /^(([1-9]\d{0,9}))(\.\d{1,2})?$/
+				},
+				contractEndDate : {
+					required : true
+				},
+				unPayedInterest:{
+					maxlength : 20,
+					required : true,
+					regex : /^(([1-9]\d{0,9})|0)(\.\d{1,2})?$/
+				},
+				totalAmount:{
+					maxlength : 20,
+					required : true,
+					regex : /^(([1-9]\d{0,9})|0)(\.\d{1,2})?$/
+				},
+				productName : {
+					maxlength : 20
+				},
+				yearIrr : {
+					required : true,
+					regex : /^(([1-9]\d{0,9})|0)?$/,
+					range:[1,100]		
+				},
+				term : {
+					regex : /^(([1-9]\d{0,9})|0)?$/
+				},
+				ensureType:{
+					maxlength : 20
+				},
+				interestStartDate:{
+					required:true
+				}
+			},
+			messages : {
+				platform:{
+					selectCheck:"请选择购买平台"
+				},
+				certiNo:{
+					 isIdCardNo:"请输入正确的身份证号",
+					required:"请输入身份证号码"
+				},
+				mobile:{
+					regex : "手机格式输入有误"
+				},
+				investorName:{
+					required:"请输入姓名",
+					maxlength : $.validator.format("限 {0}个字")
+				},
+				contractCode : {
+					maxlength : $.validator.format("限 {0}个字"),
+					required : "请输入合同编号",
+					remote: "此合同编号已存在！"
+				},
+				principal : {
+					maxlength : $.validator.format("限 {0}个字"),
+					required : "请输入投资本金",
+					regex : "金额输入有误"
+				},
+				contractEndDate : {
+					required : "请输入债权到期日"
+				},
+				unPayedInterest:{
+					maxlength : $.validator.format("限 {0}个字"),
+					required:"请输入未还利息",
+					regex : "金额输入有误"
+				},
+				totalAmount:{
+					maxlength : $.validator.format("限 {0}个字"),
+					required : "请输入本息和",
+					regex : "金额输入有误"
+				},
+				productName : {
+					maxlength : $.validator.format("限 {0}个字")
+				},
+				yearIrr : {
+					required : "请输入年化收益率",
+					regex : "区间为1%--100%之间，只支持正整数",
+					range:"区间为1%--100%之间，只支持正整数"
+				},
+				term : {
+					regex : "限整数"
+				},
+				ensureType:{
+					maxlength : $.validator.format("限 {0}个字")
+				},
+				interestStartDate:{
+					required : "请输入债权起息日"
+				}
+			}
+		});
+    });
+  $('#interestStartDate').datetimepicker({
+	locale:'zh-cn',
+  	viewMode:'days',
+  	format: 'YYYY-MM-DD',
+  	showClose:true,
+  });
+  $('#contractEndDate').datetimepicker({
+	locale:'zh-cn',
+  	viewMode:'days',
+  	format: 'YYYY-MM-DD',
+  	showClose:true,
+      useCurrent: false //Important! See issue #1075
+  });
+  $("#interestStartDate").on("dp.change", function (e) {
+      $('#contractEndDate').data("DateTimePicker").minDate(e.date);
+  });
+  $("#contractEndDate").on("dp.change", function (e) {
+      $('#interestStartDate').data("DateTimePicker").maxDate(e.date);
+  });
+  $('#myModal').on('show.bs.modal', function () {
+	  // 执行一些动作...
+	  $('#addForm')[0].reset();
+	});
+</script>
+</div>
+</body>
+</html>

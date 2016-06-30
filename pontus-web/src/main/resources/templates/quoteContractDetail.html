@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>资产详情</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/css/index.css" />
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header" />
+		<!--我的账户-->
+		<div class="box_center myuser03">
+			<div class="crumbs">
+            	<a th:href="@{/}">首页</a>
+                <span>&gt;</span>
+                <a href="#">交易中心</a>
+                <span>&gt;</span>
+                <span class="current" th:text="${contract.contractCode}"></span>
+            </div>
+            <div class="infoMain">
+                <div class="fill-info">	
+                    <div class="title" th:text="${contract.contractCode}"></div>
+                </div>
+                <div class="assertList">
+                	<ul class="clearfix">
+                    	<li>
+                        	<div class="date col_orange" th:text="|${#numbers.formatDecimal(contract.originalContract.principal, 0, 'COMMA', 2, 'POINT')}元|"></div>
+                            <p>投资本金</p>
+                        </li>
+                        <li>
+                        	<div class="date" th:text="${contract.originalContract.platform}"></div>
+                            <p>资产来源</p>
+                        </li>
+                        <li>
+                        	<div class="date" th:text="${#dates.format(contract.originalContract.contractEndDate, 'yyyy/MM/dd')}"></div>
+                            <p>债权到期日</p>
+                        </li>
+                    </ul>
+                    <ul class="clearfix">
+                    	<li>
+                        	<div class="date col_orange" th:text="|${#numbers.formatDecimal(contract.originalContract.principal, 0, 'COMMA', 2, 'POINT')}元|"></div>
+                            <p>本息总和</p>
+                        </li>
+                        <li>
+                        	<div class="date col_orange"  th:text="${contract.originalContract.unPayedInterest == null}?'元':|${#numbers.formatDecimal(contract.originalContract.unPayedInterest, 0, 'COMMA', 2, 'POINT')}元|"></div>
+                            <p>未还利息</p>
+                        </li>
+                    </ul>
+                </div>
+            	<div class="sign_box" style="padding-left: 0;padding-bottom: 30px;">
+					<form action="" method="post">
+						<ul class="ul2">
+							<li style="border-bottom:1px solid #eeeeee;"></li>
+							<li>
+								<label class="col_999">渠道：</label>
+								<span class="col_333" th:text="${contract.platform}"></span>
+							</li>
+                            <li>
+								<label class="col_999">产品名称/编号：</label>
+								<span class="col_333" th:text="${contract.contractCode}"></span>
+							</li>
+                            <li>
+								<label class="col_999">年化收益率：</label>
+								<span class="col_333" th:text="|${contract.originalContract.yearIrr}%|"></span>
+							</li>
+                             <li>
+								<label class="col_999">收益方式：</label>
+								<span class="col_333" th:text="${contract.originalContract.paybackType}"></span>
+							</li>
+                           
+						</ul>
+						
+					</form>
+				</div>
+             </div>
+		</div>
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+        
+		<script type="text/javascript">
+		</script>
+	</body>
+</html>

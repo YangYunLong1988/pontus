@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的资产-身份认证</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<style type="text/css">
+		.error{
+			color:#ef7523;
+		}
+		label[for]{
+			text-align:left;
+		}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header" ></div>
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03003')" />
+			<div class="myuse_main">
+				<div class="fs_20" style="height: 34px;border-bottom: 2px solid #eee;">身份认证</div>
+				<ul>
+					<li>
+						<span class="span1">姓名：</span>
+						<input type="text" class="ipt" th:value="${customer.idCardName!=null?customer.idCardName:''}" disabled="true"/>
+					</li>
+					<li>
+						<span class="span1">身份证号码：</span>
+						<input type="text" class="ipt" th:value="${customer.idCardAccount!=null?customer.idCardAccount:''}" disabled="true"/>
+					</li>
+					<li>
+						<span class="span1">银行：</span>
+						<input class="ipt" th:value="${bank.name!=null?bank.name:''}" disabled="true"/>
+					</li>
+					<li>
+						<span class="span1">银行卡号：</span>
+						<input type="text" class="ipt" th:value="${bank.account!=null?bank.account:''}" disabled="true"/>
+					</li>
+					<li>
+						<span class="span1">所属地：</span>
+						<div style="display: inline-block;">
+							<input class="prov ipt" th:value="${bank.province!=null?bank.province:''}" style="width: 164px;" disabled="true"/>
+							<input class="city ipt" th:value="${bank.city!=null?bank.city:''}" style="width: 164px;margin-left: 10px;" disabled="true"/>
+						</div>
+					</li>
+					<li>
+						<span class="span1">开户行：</span>
+						<input type="text" class="ipt" th:value="${bank.subbranch!=null?bank.subbranch:''}" disabled="true"/>
+					</li>
+					<li>
+						<span class="span1">居住城市：</span>
+						<div style="display: inline-block;">
+							<input class="prov ipt" th:value="${customer.residenceProvince!=null?customer.residenceProvince:''}" style="width: 104px;" disabled="true"/> 
+							<input class="city ipt" th:value="${customer.residenceCity!=null?customer.residenceCity:''}" style="width: 164px;margin-left: 10px;" disabled="true"/>
+						</div>
+					</li>
+				</ul>
+				<input id="idCardA" th:value="${idPositive!=null?idPositive:'0'}" style="display:none" disabled="true"/>
+				<input id="idCardB" th:value="${idOpposite!=null?idOpposite:'0'}" style="display:none" disabled="true"/>
+				<input id="idPersonalCard" th:value="${idCardPerson!=null?idCardPerson:'0'}" style="display:none" disabled="true"/>
+
+				<div class="upload_photo" >
+					<span class="pos_ab" style="top: 27px; left: 16px;">上传照片：</span>
+					<ul>
+						<li>
+							<p>身份证正面</p>
+							<div class="img">
+								<img id="imgA" src="/images/images/mingpian_03.jpg"/>
+							</div>
+						</li>
+						<li>
+							<p>身份证反面</p>
+							<div class="img">
+								<img id="imgB" src="/images/images/mingpian_03.jpg"/>
+							</div>
+						</li>
+						<li>
+							<p>名片</p>
+							<div class="img">
+								<img id="imgC" src="/images/images/mingpian_03.jpg"/>
+							</div>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+		<div th:replace="fragments/footer" ></div>
+	
+	<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	// <![CDATA[
+	   	var idA=$("#idCardA").val();
+	   	var idB=$("#idCardB").val();
+	   	var idC=$("#idPersonalCard").val();
+	   	console.log(idA+" "+idB+" "+idC);
+	   	
+	   	if(idA!=0){
+	   		$("#imgA").attr("src","/cust/thumbnail?id="+idA);
+	   	}
+	   	if(idB!=0){
+	   		$("#imgB").attr("src","/cust/thumbnail?id="+idB);
+	   	}
+	   	if(idC!=0){
+	   		$("#imgC").attr("src","/cust/thumbnail?id="+idC);
+	   	}
+	// ]]>
+	</script>
+	</body>
+</html>

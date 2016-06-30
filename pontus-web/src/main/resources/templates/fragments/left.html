@@ -1,0 +1,12 @@
+<div class="myuser_nav">
+	<ul>
+		<li id="menu_left_03001" th:class="${current=='03001'}?'current'"><a th:href="@{/cust/my}" href="/cust/my">用户中心</a></li>
+		<li id="menu_left_03002" th:class="${current=='03002'}?'current'"><a th:href="@{/cust/myinfo}">个人资料</a></li>
+		<li id="menu_left_03003" th:class="${current=='03003'}?'current'"><a th:href="@{/cust/identify-authentication}">身份认证</a></li>
+		<li id="menu_left_03004" th:class="${current=='03004'}?'current'"><a th:href="@{/cust/change-password}" href="#">安全设置</a></li>
+		<li id="menu_left_03005" th:class="${current=='03005'}?'current'"><a th:href="@{/qc/list}" href="#">我的资产</a></li>
+		<!--/*--> 
+		<li id="menu_left_03006" th:class="${current=='03006'}?'current'"><a href="#">系统消息</a></li>
+		<!--*/-->
+	</ul>
+</div>

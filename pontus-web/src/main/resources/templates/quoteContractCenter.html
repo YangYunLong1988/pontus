@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>交易中心</title>
+<link rel="stylesheet" type="text/css" href="/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/css/index.css" />
+</head>
+<body>
+	<!--页头-->
+	<div th:replace="fragments/header(current='02000')" />
+	<!--资产列表-->
+	<div class="mt_24 box_wrap"  style="min-height:540px;">
+		<div class="box_center asset_list">
+			<div class="choose">
+				<ul>
+					<li>
+						<span class="col_999">渠道：</span>
+						<div th:class="${form.platform==null or form.platform==''}?'current'" app-platform="">不限</div>
+						<div th:each="item : ${platforms}" th:text="${item}" th:attr="app-platform=${item}" th:class="${form.platform==item}?'current'"></div>
+					</li>
+					<li>
+						<span class="col_999">折扣率：</span>
+						<div th:class="${form.discountRateBegin==null and form.discountRateEnd==null}?'current'" app-discount-rate="">不限</div>
+						<div th:class="${form.discountRateBegin==0 and form.discountRateEnd==30}?'current'" app-discount-rate="0:30">0%-30%</div>
+						<div th:class="${form.discountRateBegin==31 and form.discountRateEnd==50}?'current'" app-discount-rate="31:50">31%-50%</div>
+						<div th:class="${form.discountRateBegin==51 and form.discountRateEnd==80}?'current'" app-discount-rate="51:80">51%-80%</div>
+						<div th:class="${form.discountRateBegin==81 and form.discountRateEnd==100}?'current'" app-discount-rate="81:100">81%-100%</div>
+					</li>
+					<li><span class="col_999">剩余期限：</span>
+						<div th:class="${form.remainingTimeBegin==null and form.remainingTimeEnd==null}?'current'" app-remaining-time="">不限</div>
+						<div th:class="${form.remainingTimeBegin==0 and form.remainingTimeEnd==30}?'current'" app-remaining-time="0:30">0-30天</div>
+						<div th:class="${form.remainingTimeBegin==31 and form.remainingTimeEnd==60}?'current'" app-remaining-time="31:60">31-60天</div>
+						<div th:class="${form.remainingTimeBegin==61 and form.remainingTimeEnd==90}?'current'" app-remaining-time="61:90">61-90天</div>
+						<div th:class="${form.remainingTimeBegin==91 and form.remainingTimeEnd==180}?'current'" app-remaining-time="91:180">91-180天</div>
+						<div th:class="${form.remainingTimeBegin==181 and form.remainingTimeEnd==99999}?'current'" app-remaining-time="181:99999">180天以上</div>
+					</li>
+				</ul>
+				<form method="post" id="queryFrom">
+					<input type="hidden" name="platform" id="platform" th:value="${form.platform}"/>
+					<input type="hidden" name="discountRateBegin" id="discountRateBegin" th:value="${form.discountRateBegin}"/>
+					<input type="hidden" name="discountRateEnd" id="discountRateEnd" th:value="${form.discountRateEnd}"/>
+					<input type="hidden" name="remainingTimeBegin" id="remainingTimeBegin" th:value="${form.remainingTimeBegin}"/>
+					<input type="hidden" name="remainingTimeEnd" id="remainingTimeEnd" th:value="${form.remainingTimeEnd}"/>
+					<input type="hidden" name="direction" id="direction" th:value="${direction}"/>
+					<input type="hidden" name="property" id="property" th:value="${property}"/>
+				</form>
+			</div>
+
+			<h3 class="mt_24 fs_20">资产列表</h3>
+			<table border="0" cellspacing="0" cellpadding="0" width="100%" class="asset_table">
+				<tr>
+					<th class="pl_20">
+						<a th:if="${property=='quoteContract.contractCode' and direction=='desc'}" class="rank" href="javascript:;" app-order="quoteContract.contractCode:asc">合同编号<i class="button-down"></i></a>
+						<a th:if="${property=='quoteContract.contractCode' and direction=='asc'}" class="rank" href="javascript:;" app-order="quoteContract.contractCode:desc">合同编号<i class="button-up"></i></a>
+						<a th:if="${property!='quoteContract.contractCode'}" class="rank" href="javascript:;" app-order="quoteContract.contractCode:desc">合同编号<i class="default"></i></a>
+					</th>
+					<th>
+						<a th:if="${property=='quoteContract.paybackType' and direction=='desc'}" class="rank" href="javascript:;" app-order="quoteContract.paybackType:asc">还款方式<i class="button-down"></i></a>
+						<a th:if="${property=='quoteContract.paybackType' and direction=='asc'}" class="rank" href="javascript:;" app-order="quoteContract.paybackType:desc">还款方式<i class="button-up"></i></a>
+						<a th:if="${property!='quoteContract.paybackType'}" class="rank" href="javascript:;" app-order="quoteContract.paybackType:desc">还款方式<i class="default"></i></a>
+					</th>
+					<th>
+						<a th:if="${property=='discountRate' and direction=='desc'}" class="rank" href="javascript:;" app-order="discountRate:asc">折扣率<i class="button-down"></i></a>
+						<a th:if="${property=='discountRate' and direction=='asc'}" class="rank" href="javascript:;" app-order="discountRate:desc">折扣率<i class="button-up"></i></a>
+						<a th:if="${property!='discountRate'}" class="rank" href="javascript:;" app-order="discountRate:desc">折扣率<i class="default"></i></a>
+					</th>
+					<th>
+						<a th:if="${property=='actualPrice' and direction=='desc'}" class="rank" href="javascript:;" app-order="actualPrice:asc">转让价格<i class="button-down"></i></a>
+						<a th:if="${property=='actualPrice' and direction=='asc'}" class="rank" href="javascript:;" app-order="actualPrice:desc">转让价格<i class="button-up"></i></a>
+						<a th:if="${property!='actualPrice'}" class="rank" href="javascript:;" app-order="actualPrice:desc">转让价格<i class="default"></i></a>
+					</th>
+					<th>
+						<a th:if="${property=='expProfit' and direction=='desc'}" class="rank" href="javascript:;" app-order="expProfit:asc">预期收益<i class="button-down"></i></a>
+						<a th:if="${property=='expProfit' and direction=='asc'}" class="rank" href="javascript:;" app-order="expProfit:desc">预期收益<i class="button-up"></i></a>
+						<a th:if="${property!='expProfit'}" class="rank" href="javascript:;" app-order="expProfit:desc">预期收益<i class="default"></i></a>
+					</th>
+					<th colspan="2">
+						<a th:if="${property=='endDate' and direction=='desc'}" class="rank" href="javascript:;" app-order="endDate:asc">剩余期限<i class="button-down"></i></a>
+						<a th:if="${property=='endDate' and direction=='asc'}" class="rank" href="javascript:;" app-order="endDate:desc">剩余期限<i class="button-up"></i></a>
+						<a th:if="${property!='endDate'}" class="rank" href="javascript:;" app-order="endDate:desc">剩余期限<i class="default"></i></a>
+					</th>
+				</tr>
+				<tr  th:each="item : ${transferContracts.content}">
+					<td class="pl_20" th:text="${item.quoteContract.contractCode}">000001</td>
+					<td th:text="${item.quoteContract.originalContract.paybackType}">到期还本付息</td>
+					<td th:text="|${item.discountRate}%|">90%</td>
+					<td th:text="|${#numbers.formatDecimal(item.actualPrice, 0, 'COMMA', 2, 'POINT')}元|">589,589,200.00</td>
+					<td th:text="|${#numbers.formatDecimal(item.expProfit, 0, 'COMMA', 2, 'POINT')}元|">589,589,200.00</td>
+					<td th:text="|${item.remainingTime}天|">115天</td>
+					<td class="rightInfo"><span th:text="|${item.tradedAssigneeSet.size()}人已预约|">9人已预约</span> <a th:href="@{/transfer/detail(id=${item.id})}">受让</a></td>
+				</tr>
+				<tr th:if="${transferContracts.content.isEmpty()}">
+					<td class="pl_20" colspan="7" style="background: #fff;border: none;text-align: center;">暂无数据</td>
+				</tr>
+			</table>
+
+			<!--翻页-->
+			<div class="mt_24 text_center" th:if="${transferContracts.totalPages>1}" th:with="cusTotalPages=${transferContracts.totalPages==0}?0:${transferContracts.totalPages-1},pageBegin=${(transferContracts.number-4) lt 0}?0:${page.number-4},pageEnd=${(pageBegin+9) gt transferContracts.totalPages}?${cusTotalPages}:${pageBegin+9}">
+				<ul class="yl-pagination" id="yl-pagination">
+					<li th:if="${transferContracts.number==0}" class="first"><a href="javascript:;" class="disabled">&lt;</a></li>
+					<li th:if="${transferContracts.number!=0}" class="first"><a href="javascript:;" th:attr="app-pn=${transferContracts.number-1}">&lt;</a></li>
+				    <th:block th:each="item : ${#numbers.sequence(pageBegin,pageEnd)}">
+				        <li th:class="${transferContracts.number==item}?'current'" ><a href="javascript:;" th:attr="app-pn=${item}" th:text="${item+1}"></a></li>
+				    </th:block>
+					<li th:if="${transferContracts.number==cusTotalPages}" class="last"><a href="javascript:;" class="disabled">&gt;</a></li>
+					<li th:if="${transferContracts.number!=cusTotalPages}" class="last"><a href="javascript:;" th:attr="app-pn=${transferContracts.number+1}" >&gt;</a></li>	
+				</ul>
+				<form method="post" id="pageable_form">
+					<input type="hidden" name="platform" id="platform" th:value="${form.platform}"/>
+					<input type="hidden" name="discountRateBegin" th:value="${form.discountRateBegin}"/>
+					<input type="hidden" name="discountRateEnd" th:value="${form.discountRateEnd}"/>
+					<input type="hidden" name="remainingTimeBegin" th:value="${form.remainingTimeBegin}"/>
+					<input type="hidden" name="remainingTimeEnd" th:value="${form.remainingTimeEnd}"/>
+					<input type="hidden" name="direction" th:value="${direction}"/>
+					<input type="hidden" name="property" th:value="${property}"/>
+					<input type="hidden" name="pn" id="pn" /> 
+					<input type="hidden" name="ps" id="ps" th:value="20" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--版权-->
+	<div th:replace="fragments/footer" />
+	<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/com.js" type="text/javascript" ></script>
+	<script type="text/javascript">
+	// <![CDATA[
+		$("div[app-platform]").on("click",function(){
+			$("#platform").val($(this).attr("app-platform"));
+			$("#queryFrom").submit();
+		});
+		
+		$("div[app-discount-rate]").on("click",function(){
+			var value = $(this).attr("app-discount-rate");
+			if(value){
+				var p = value.indexOf(":");
+				$("#discountRateBegin").val(value.substring(0,p));
+				$("#discountRateEnd").val(value.substring(p+1));
+			}else{
+				$("#discountRateBegin").val("");
+				$("#discountRateEnd").val("");
+			}
+			$("#queryFrom").submit();
+		});
+		
+		$("a[app-order]").on("click",function(){
+			var value = $(this).attr("app-order");
+			if(value){
+				var p = value.indexOf(":");
+				$("#property").val(value.substring(0,p));
+				$("#direction").val(value.substring(p+1));
+			}
+			$("#queryFrom").submit();
+		});
+		
+		
+		
+		$("div[app-remaining-time]").on("click",function(){
+			var value = $(this).attr("app-remaining-time");
+			if(value){
+				var p = value.indexOf(":");
+				$("#remainingTimeBegin").val(value.substring(0,p));
+				$("#remainingTimeEnd").val(value.substring(p+1));
+			}else{
+				$("#remainingTimeBegin").val("");
+				$("#remainingTimeEnd").val("");
+			}
+			$("#queryFrom").submit();
+		});
+		
+	// ]]>
+	</script>
+</body>
+</html>

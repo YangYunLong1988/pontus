@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>忘记密码</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body >
+		<!--页头-->
+		<div class="box_wrap header_box">
+			<div class="box_center">
+				<div class="header">
+					<span>客服电话：<span style="color: #ef7523;">400-1236-4562</span></span>
+					<div class="fr">
+						<a href="#">登录</a>
+						<a href="#">注册</a>
+						<a style="color: #ddd;">|</a>
+						<a href="#">消息</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--导航-->
+		<div class="box_wrap nav_box">
+			<div class="box_center cf">
+				<div class="logo fl">
+					<a href="#"><img src="images/logo.png"/></a>
+				</div>
+				<div class="nav fr">
+					<ul>
+						<li>
+							<a href="#">首页</a>
+						</li>
+						<li>
+							<a href="#">交易中心</a>
+						</li>
+						<li>
+							<a href="#">我的账户</a>
+						</li>
+						<li>
+							<a href="#">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<!--登录框-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center bgfff text_center" style="padding-top: 30px;min-height: 500px;">
+				<h3 class="fs_24">忘记密码</h3>
+				<img src="images/images/images/wangji3_03.jpg" class="mt_24"/>
+				<div class="sign_box">
+					<form action="" method="post">
+						<ul class="">
+							<li class="ml_130">
+								<input type="text" class="ipt col_999" name="" id="" value="请输入新密码" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li class="ml_130">
+								<input type="text" class="ipt col_999" name="" id="" value="确认密码" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li class="mt_40 ml_130">
+								<a href="#" class="ptbtn ptbtn_orange" style="width: 338px;line-height: 40px;font-size: 16px;">下一步</a>
+							</li>
+						</ul>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!--版权-->
+		<div class="copy_box">
+			版权所有 &copy;XXXXXXXX有限公司 沪ICP备XXXXXXXXXX
+		</div>
+		
+		<script type="text/javascript">
+			var copy = document.getElementsByClassName("copy_box")[0];
+			var copyH = copy.offsetTop;
+			var webH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(copyH<webH){
+				copy.style.position = "fixed";
+				copy.style.bottom = "0";
+			}
+		</script>
+		
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$("input").focus(function(){
+				$(this).css({borderColor:"#68b5ed"});
+				if($(this).val() == this.defaultValue){
+					$(this).val("").css({color:"#333"});
+				}
+			});
+			$("input").blur(function(){
+				$(this).css({borderColor:"#dadada"});
+				if($(this).val() == ""){
+					$(this).val(this.defaultValue).css({color:"#999",borderColor:"#dadada"});
+				}
+			});
+		</script>
+		
+	</body>
+</html>

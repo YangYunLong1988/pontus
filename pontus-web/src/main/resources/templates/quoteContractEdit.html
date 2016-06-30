@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-我的资产</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/tiptool.css"/>
+		<style type="text/css">
+		label.error {
+			color: #ef7523;
+			width: inherit;
+			margin-left: 10px;
+		}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='03000')" />
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的资产
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03005')" />
+			<div class="msg_main">
+            	<div class="main-title">挂牌预约</div>
+                <div class="sign_box" style="padding-left: 0;padding-bottom: 30px;">
+					<form th:action="@{/qc/edit}" id="qcEditForm" method="post">
+						<ul class="ul2">
+							<li>
+								<label><span class="col_orange">*</span>购买平台：</label>
+								<select name="platform" id="platform" class="prov ipt" style="width: 338px;">
+                                	<option value="">请选择</option>
+                                	<option th:each="item : ${platforms}" th:selected="${item==contract.platform}?'selected'"  th:text="${item}" th:value="${item}">金鹿财行</option>
+                                </select>								
+							</li>
+							<li>
+								<label><span class="col_orange">*</span>合同编号：</label>
+								<input type="text" class="ipt" name="contractCode" id="contractCode" th:value="${contract.contractCode}" />
+							</li>
+							
+							<li>
+								<label><span class="col_orange">*</span>投资本金：</label>
+								<input type="text" class="ipt" name="principal" id="principal" th:value="${contract.principal}" />
+								<span class="col_999">元</span><label class="error" for="principal"></label>
+							</li>
+							
+							<li>
+								<label><span class="col_orange">*</span>合同到期日：</label>
+								<input type="text" class="ipt tcal"  id="contractEndDate" name="contractEndDate"  th:value="${contract.contractEndDate==null}?'':${#dates.format(contract.contractEndDate, 'yyyy-MM-dd')}" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})"/>
+							</li>
+                            <li>
+								<label>未还利息：</label>
+								<input type="text" class="ipt" name="unPayedInterest" id="unPayedInterest" th:value="${contract.unPayedInterest}" />
+								<span class="col_999">元</span><label class="error" for="unPayedInterest"></label>
+							</li>
+							<li>
+								<label>本息和：</label>
+								<input type="text" class="ipt" name="totalAmount" id="totalAmount" th:value="${contract.totalAmount}" />
+								<span class="col_999">元</span><label class="error" for="totalAmount"></label>
+							</li>
+                            
+                            <li>
+								<label>产品名称：</label>
+								<input type="text" class="ipt" name="productName" id="productName" th:value="${contract.productName}" />
+							</li>
+                            <li>
+								<label>年化收益率：</label>
+								<input type="text" class="ipt" name="yearIrr" id="yearIrr" th:value="${contract.yearIrr}" />
+								<span class="col_999">%</span><label class="error" for="yearIrr"></label>
+							</li>
+                            <li>
+								<label>期限：</label>
+								<input type="text" class="ipt" name="term" id="term" th:value="${contract.term}" />
+								<span class="col_999">天</span><label class="error" for="term"></label>
+							</li>
+                            <li><label>还款方式：</label> <span class="pitchOn" app-bind="paybackType" th:attr="app-value=${item}" th:classappend="${contract.paybackType==item}?'on'" th:each="item : ${paybackTypes}"><i></i>
+							<th:block th:text="${item}">到期一次性还本付息</th:block></span><input type="hidden" name="paybackType" id="paybackType"  th:value="${contract.paybackType==null}?${paybackTypes[0]}:${contract.paybackType}" /></li>
+							
+                            <li>
+								<label style="vertical-align:top">附件协议：</label>
+                                <a  id="guapaiOrder" class="checkFile checkunuploadFile" href="javascript:;">
+                                	<span class="col_333">《原始合同》</span><br />
+                                    <span class="col_blue">上传协议附件</span>
+                                </a>
+                                <input type="hidden" name="placeholderFile" id="placeholderFile"/>
+							</li>
+                            <li>
+								<label>&nbsp;</label>
+								<a class="guapaiBtn02 wd120" href="javascript:;" app-submit="qcEditForm">挂牌预约</a>
+							</li>
+						</ul>
+						<input type="hidden" name="id" id="contractId" th:value="${contract.id}"/>
+						<input type="hidden" name="attacIds" th:each="item : ${tprottcols}" th:value="${item.id}" th:id="|attac-id-${item.id}|" app-type="TRANSFER_PROTOCOL"/>
+						<input type="hidden" name="attacIds" th:each="item : ${gprottcols}" th:value="${item.id}" th:id="|attac-id-${item.id}|"  app-type="GUARANTEE_PROTOCOL"/>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+        
+        <div class="mask"></div>
+         <div id="uploadFile" class="adduploadFile dis_none">
+            <div class="title cf">
+                <div class="title cf"><a class="bdfBtn fr" href="javascript:;">关闭</a></div>
+            </div>
+            <h4>上传图片</h4>
+            <p>请按顺序依次上传，最多支持10张；支持jpg，png，bmp格式</p>
+            
+            <ul class="tab-title tab-head cf">
+                <li class="active">债权转让及回购协议</li>
+                <li>担保承诺函</li>
+            </ul>
+            <ul class="tab-content">
+                 <li style="display:block;">
+                 	<ul class="fileBox clearfix" app-upload="TRANSFER_PROTOCOL">
+                 		<li class="mt_5" th:each="item : ${tprottcols}">
+                 			<a href="javascript:;"><img th:attr="app-mapper=|#attac-id-${item.id}|" class="delete" src="/images/images/close.png" /><img th:src="@{/qc/attac-thumbnail(id=${item.id})}" width="100%" height="100%" /></a>
+                 		</li>
+                        <li class="mt_5" th:if="${tprottcols.size() lt 10}" th:each="item : ${#numbers.sequence(1,10-tprottcols.size())}"><a class="add" href="javascript:;"><input type="file"/></a></li>
+                    </ul>
+                    <div class="ensure"><a class="guapaiBtn02 wd120"  href="javascript:;">确定</a></div>
+                 </li>
+                 <li style="display:none;">
+                 	<ul class="fileBox clearfix" app-upload="GUARANTEE_PROTOCOL">
+                        <li class="mt_5" th:each="item : ${gprottcols}">
+                 			<a href="javascript:;"><img th:attr="app-mapper=|#attac-id-${item.id}|" class="delete" src="/images/images/close.png" /><img th:src="@{/qc/attac-thumbnail(id=${item.id})}" width="100%" height="100%" /></a>
+                 		</li>
+                        <li class="mt_5" th:if="${gprottcols.size() lt 10}" th:each="item : ${#numbers.sequence(1,10-gprottcols.size())}"><a class="add" href="javascript:;"><input type="file"/></a></li>
+                    </ul>
+                    <div class="ensure"><a class="guapaiBtn02 wd120"  href="javascript:;">确定</a></div>
+                 </li>
+            </ul>
+         </div>
+         
+         
+        <div class="shade-box" id="errorTipView" style="display: none;z-index: 999">
+		<div class="shade" style="z-index: 999">
+			<div class="close">
+			</div>
+			<div class="tip" style="text-align: center;font-size: 16px;">
+				<span class="tipContent"></span>
+			</div>
+			<div class="shade-btn" style="text-align: center;">
+				<a href="javascript:;" class="queding" style="margin-left: 0;margin-top: 20px;">确定</a>
+			</div>
+		</div>
+		</div>
+         
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		// <![CDATA[
+		var flagSubmit = true;
+		$("span.pitchOn").click(function() {
+			if ($(this).hasClass('on')) {
+				//$(this).removeClass('on');
+			} else {
+				$(this).addClass('on').siblings().removeClass('on');
+			}
+		});
+		$.validator.addMethod("regex", function(value, element, regexp) {
+			var check = false;
+			var re = new RegExp(regexp);
+			return this.optional(element) || re.test(value);
+		}, "Please check your input.");
+		$.validator.addMethod("checkContractFile", function(value, element, regexp) {
+			return $("input[app-type=TRANSFER_PROTOCOL]").size()>0 && $("input[app-type=GUARANTEE_PROTOCOL]").size()>0;
+		}, "Please check your input.");
+
+		$("#qcEditForm").validate({
+			ignore : ".ignore",
+			rules : {
+				platform:{
+					required : true
+				},
+				contractCode : {
+					required : true,
+					remote:{
+					    url: "/qc/check-posted",     //后台处理程序
+					    type: "post",               //数据发送方式
+					    dataType: "json",
+					    data:{
+						    id:function(){
+						    	return $("#contractId").val();
+						    }
+					    }
+					}
+				},
+				principal : {
+					required : true,
+					regex : /^(([1-9]\d{0,9}))(\.\d{1,2})?$/
+				},
+				contractEndDate : {
+					required : true
+				},
+				unPayedInterest:{
+					regex : /^(([1-9]\d{0,9})|0)(\.\d{1,2})?$/
+				},
+				totalAmount:{
+					regex : /^(([1-9]\d{0,9})|0)(\.\d{1,2})?$/
+				},
+				productName : {
+					maxlength : 60
+				},
+				yearIrr : {
+					regex : /^[1-9]+(\.[0-9]{2})?$/,
+					range:[1,100]		
+				},
+				term : {
+					regex : /^(([1-9]\d{0,9})|0)?$/
+				},
+				placeholderFile:{
+					checkContractFile:true
+				}
+			},
+			messages : {
+				platform:{
+					required : "请选择购买平台"
+				},
+				contractCode : {
+					required : "请输入投资编号",
+					remote: "合同已存在, 或已特殊回购"
+				},
+				principal : {
+					required : "请输入投资本金",
+					regex : "金额输入有误"
+				},
+				contractEndDate : {
+					required : "请输入债权到期日"
+				},
+				unPayedInterest:{
+					regex : "金额输入有误"
+				},
+				totalAmount:{
+					regex : "金额输入有误"
+				},
+				productName : {
+					maxlength : $.validator.format("限 {0}个字")
+				},
+				yearIrr : {
+					regex : "区间为1%--100%之间，至多两位小数",
+					range:"区间为1%--100%之间，至多两位小数"
+				},
+				term : {
+					regex : "限整数"
+				},
+				placeholderFile:{
+					checkContractFile:"各类协议附件至少上传一份"
+				}
+			},
+			submitHandler:function(form) {
+				if(!flagSubmit){
+					return;
+				}
+				var param = {
+						"contractCode":$("#contractCode").val(),
+						"platform":$("#platform").val()
+				};
+				$.post("/qc/match-orig",param,function(result){
+					if(result.code == 0){
+						flagSubmit = false;
+						form.submit();
+					}else{
+						showTipView("对不起，没有匹配到您的合同，请您认真核查后再次提交，谢谢");
+					}
+				});
+			}
+		});
+		
+		$("a.guarproUpliad").click(function() {
+			$(".mask").fadeIn(800);
+			$("#guarproUpliadView").fadeIn(800);
+		});
+
+		$("a.bdfBtn,.ensure a.guapaiBtn02").click(function() {
+			$(".mask").fadeOut(800);
+			$(".adduploadFile").fadeOut(800);
+		});
+		
+		$("#uploadFile").delegate(".delete","click",function(){
+			$($(this).attr("app-mapper")).remove();
+			var pli = $(this).parents("li:eq(0)");
+			pli.empty();
+			pli.append("<a class=\"add\" href=\"javascript:;\"><input type=\"file\" /></a>");	
+		});
+		
+		$("#uploadFile").delegate("ul[app-upload] input[type=file]","change",function(){
+	  		var target = this;
+			ajaxFileUpload(target,function(result){
+				if(result.code == 0){
+					var pli = $(target).parents("li:eq(0)");
+					var uploadType = $(target).parents("ul:eq(0)").attr("app-upload");
+					pli.empty();
+					pli.append("<a href=\"javascript:;\"><img app-mapper=\"#attac-id-"+result.content+"\" class=\"delete\" src=\"/images/images/close.png\" /><img src=\"/qc/attac-thumbnail?id="+result.content+"\" width=\"100%\" height=\"100%\" /></a>");
+					$("#qcEditForm").append("<input type=\"hidden\" name=\"attacIds\" id=\"attac-id-"+result.content+"\" value=\""+result.content+"\" app-type=\""+uploadType+"\" />");
+					$("#placeholderFile").valid();	
+				}else{
+					showTipView(result.content||"上传文件失败");
+				}
+			})
+	  	});
+		
+		function ajaxFileUpload(element,call){
+			var fileName = $(element).val().toLocaleLowerCase();
+			if(!fileName.endWith('.jpg') && !fileName.endWith('.png') && !fileName.endWith('.bmp')){
+				showTipView("支持jpg.png.bmp格式");
+				$(element).parents("li:eq(0)").html("<a class=\"add\" href=\"javascript:;\"><input type=\"file\"/></a>")
+		        return;
+			}
+			
+			var uploadType = $(element).parents("ul:eq(0)").attr("app-upload");
+			var data = new FormData();
+			data.append('file', element.files[0]);
+			data.append('t', uploadType);
+			jQuery.ajax({
+			    url: "/qc/upload",
+			    cache: false,
+			    data:data,
+			    contentType: false,
+			    processData: false,
+			    type: "POST",
+			    success: function(data){
+			    	call(data);
+			    }
+			});
+		}
+		$("a#guapaiOrder").click(function(){
+			  $(".mask").fadeIn(800);
+			  $("#uploadFile").fadeIn(800);
+		});
+		
+		function showTipView(msg){
+			$(".tipContent").text(msg);
+			$(".shade-box,.shade").fadeIn(800);
+		}
+		
+		$(".queding,.close").on("click",function(){
+			$(".shade-box,.shade").fadeOut(800);
+		});
+		
+		/*tab切换*/	
+		 function tabs(tabTit,on,tabCon){
+			$(tabCon).each(function(){
+			$(this).children().eq(0).show();
+			});
+			$(tabTit).each(function(){
+				$(this).children().eq(0).addClass(on);
+			});
+			$(tabTit).children().click(function(event){
+				event.stopPropagation();
+				$(this).addClass(on).siblings().removeClass(on);
+				var index = $(tabTit).children().index(this);
+				$(tabCon).children().eq(index).show().siblings().hide();
+			});
+		}
+	  	tabs(".tab-head","active",".tab-content");
+		
+	  	String.prototype.endWith=function(str){
+			if(str==null||str==""||this.length==0||str.length>this.length){
+				return false;
+			}
+			if(this.substring(this.length-str.length)==str){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	  	
+		// ]]>
+	</script>
+	</body>
+</html>

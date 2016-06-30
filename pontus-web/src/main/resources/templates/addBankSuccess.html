@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-安全设置</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<style type="text/css">
+			label.error{
+				color:#ef7523;
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='03000')" />
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03004')" />
+				<div class="my-assets">
+                <ul class="tab-title tab-head cf">
+                    <li><a th:href="@{/cust/change-password}" href="#">修改密码</a></li>
+                    <li class="active">银行卡设置</li>
+                </ul>
+                <ul class="pw-content tab-content">
+                <li style="display:block;">
+                            <!--添加银行成功卡start--> 
+                            <div class="addsucces">
+                            	<h4 th:text="${msg}">添加成功</h4>
+                                <p><span class="fs_18 sp_orange" id="addsuccess"></span>秒后返回到<a th:href="@{/cust/mybankcard}" id="bankset">银行卡设置页</a></p>
+                            </div>
+                </li>
+                </ul>
+            </div>
+		</div>
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+				// <![CDATA[
+				$(function(){
+					Load();
+				});
+				var secs = 5; //倒计时的秒数 
+				function Load(){
+     				for(var i=secs;i>=0;i--){
+       					window.setTimeout('doUpdate(' + i + ')', (secs-i) * 1000);
+     					}
+ 					}
+
+				function doUpdate(num){ 
+				  document.getElementById('addsuccess').innerHTML =num;
+				  if(num==0){
+					  location.href="/cust/mybankcard";
+				  }
+				}
+				
+				// ]]>
+		</script>
+		
+	</body>
+</html>

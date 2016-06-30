@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-用户中心</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='03000')" />
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03001')" />
+			<div class="myuse_main">
+				<div class="user-info">
+                	<div class="state bgorange" th:text="${customer.workFlow}"><!--认证中...--></div>
+                    <!--认证失败
+                    <div class="state bgred">认证失败</div>
+                    -->
+                    <div class="tele"  th:text="${customer!=null?customer.phone:''}"></div>
+                    <div class="bankNum" th:text="${bank!=null?bank.name:''}"><span th:text="${bank.account}"></span></div>
+                </div>
+				<div class="fs_20">我的资产</div>
+                <div class="user-box cf">
+                	<div class="box fl">
+                    	<h6>挂牌预约</h6>
+                        <a class="col_orange" th:href="@{/qc/list}" th:text="${quoteNums!=null?quoteNums:'0'}"></a>
+                    </div>
+                    <div class="box fl">
+                    	<h6>可转让</h6>
+                        <a class="col_orange" th:href="@{/qc/transferable}"  th:text="${canTransferNums!=null?canTransferNums:'0'}"></a>
+                    </div>
+                    <div class="box fl">
+                    	<h6>转让记录</h6>
+                        <a class="col_orange" th:href="@{/qc/transf-record}" th:text="${transferNums!=null?transferNums:'0'}"></a>
+                    </div>
+                    <div class="box bdrtno fl">
+                    	<h6>受让记录</h6>
+                        <a class="col_orange" th:href="@{/qc/transfee-record}" th:text="${transfeeNums!=null?transfeeNums:'0'}"></a>
+                    </div>
+                </div>
+                <div class="fs_20">动态</div>
+                <div class="infoState">
+                	<p>暂无动态</p>
+                </div>
+			</div>
+		</div>
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

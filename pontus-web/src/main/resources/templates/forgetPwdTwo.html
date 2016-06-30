@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>忘记密码</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<style type="text/css">
+		.error{
+			color:#ef7523;
+		}
+		label[for]{
+			text-align:left;
+		}
+		</style>
+	</head>
+	<body >
+		<!--页头-->
+		<div th:replace="fragments/header" />
+		
+		<!--登录框-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center bgfff text_center" style="padding-top: 30px;min-height: 500px;">
+				<h3 class="fs_24">忘记密码</h3>
+				<img src="images/images/images/wangji2_03.jpg" class="mt_24"/>
+				<div class="sign_box">
+					<form id="formId" action="/forget-pwd-three" method="post">
+						<ul class="">
+							<li class="ml_130">
+								<p id="phone" class="fs_20 col_666" th:text="${phone}" ></p>
+							</li>
+							<li class="ml_130">
+								<input  name="phone" style="display:none" th:value="${phone}"/>
+								<input type="text" class="ipt" name="code" id="code" value="" style="width: 190px;margin-right: 8px;" maxlength="6"/>
+								<input type="button" class="regbtn1" name="" id="sendCode" value="发送验证码" />
+							</li>
+							
+							<li class="mt_40 ml_130">
+								<a id="nextStepId" href="javascript:;" class="ptbtn ptbtn_orange" style="width: 338px;line-height: 40px;font-size: 16px;">下一步</a>
+							</li>
+						</ul>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+		
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		// <![CDATA[
+			
+			$("input").focus(function(){
+				$(this).css({borderColor:"#68b5ed"});
+			});
+			$("input").blur(function(){
+				$(this).css({borderColor:"#dadada"});
+			});
+			
+			//提交表单
+			$("#nextStepId").click(function(){
+				clearError();
+				if($(".error").length==0){
+					$("#formId").submit();
+				}
+			});
+			
+			function clearError(){
+				$("label[for]").each(function(){
+					if($(this).text()==""){
+						$(this).remove();
+					}
+				})
+			}
+		// ]]>
+		</script>
+		
+		
+		<script type="text/javascript">
+		// <![CDATA[
+		//验证码倒计时60s
+		var wait=60;  
+		function time(self) {  
+		        if (wait == 0) {  
+		        	$(self).removeClass("regbtn").addClass("regbtn1");           
+		        	$(self).val("发送验证码");
+		            wait = 60;
+		        } else {  
+		        	$(self).removeClass("regbtn1").addClass("regbtn");   
+		        	$(self).val("重新发送(" + wait + ")s");  
+		            wait--;  
+		            setTimeout(function() {  
+		                time(self);  
+		            },1000);
+		        }
+		    }  
+		//点击发送验证码事件
+		$("#sendCode").on("click",function(){
+			if($(".regbtn").length>0){
+				return ;
+			}
+			
+			time(this);
+
+			$(this).removeClass("regbtn1").addClass("regbtn");
+			$.post('/send-phone-code2',{'phone':$('#phone').text()},function(data){
+				if(data.code==0){
+					;
+				}else{
+					alert('验证码发送失败!');
+				}
+			},'json');
+		});
+		
+		$(function(){
+			$("#formId").validate({
+				errorPlacement:function(error,element){
+					error.appendTo(element.parent());
+				},
+				rules: {
+					code:{
+						required: true,
+						remote:{
+							url:"/check-phone-vcode",
+							type:"POST",
+							data:{
+								phone:function(){return $("#phone").text();},
+								code:function(){return $("#code").val();}
+							}
+						}
+					}
+					
+				},
+				messages: {
+					code :{
+						required: "请输入验证码！",
+						remote: "验证码有误！"
+					}
+				}
+			});
+		});      
+		// ]]>
+		</script>
+		
+	</body>
+</html>

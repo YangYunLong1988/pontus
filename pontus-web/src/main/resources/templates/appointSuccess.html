@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>交易中心</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/css/index.css" />
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header" />
+ 		<!--资产列表-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center asset_list">
+				<div class="transfer-tip">
+                	<p>您的受让已提交，我们的客服将尽快联系您！</p>
+                    <a class="guapaiBtn02 wd228" th:href="@{/qc/center}">返回</a>
+                </div>
+			</div>
+		</div> 
+
+       		<!--版权-->
+		<div th:replace="fragments/footer" /> 
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>       
+	</body>
+</html>

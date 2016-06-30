@@ -1,0 +1,281 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+  <title>合同详情</title>
+  <style type="text/css">
+  .has-error label {
+  	    background: url('/img/tips.png') no-repeat right;
+  }
+  </style>
+</head>
+<body>
+<div layout:fragment="content">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+      <h1>
+        	合同详情
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+           		<div class="box-header with-border">
+              <h3 class="box-title">基本资料</h3>
+            </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+           			<div class="col-xs-1"></div>
+           			<div class="col-xs-4">
+           			<div class="form-horizontal">
+           				<div th:class="${quoteContract.customer.idCardName==contract.investorName}?(${quoteContract.customer.idCardName==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.customer.idCardName}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.customer.idCardName==contract.investorName}?(${quoteContract.customer.idCardName==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							姓名:</label>
+	                        <div class="form-control-static"><a th:href="${#httpServletRequest.getContextPath()}+'/customer/details/'+ ${quoteContract.customer.id}" th:text="${contract.investorName}"></a></div>
+	                       
+						</div>
+						<div th:class="${quoteContract.customer.phone==contract.mobile}?(${quoteContract.customer.phone==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.customer.phone}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.customer.phone==contract.mobile}?(${quoteContract.customer.phone==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							手机号码:</label>
+	                        <div class="form-control-static" th:text="${contract.mobile}">-</div>
+						</div>
+						<div th:class="${quoteContract.customer.idCardAccount==contract.certiNo}?(${quoteContract.customer.idCardAccount==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.customer.idCardAccount}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.customer.idCardAccount==contract.certiNo}?(${quoteContract.customer.idCardAccount==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							身份证号码:</label>
+	                       <div class="form-control-static" th:text="${contract.certiNo}">-</div>
+						</div>
+						<div th:class="${quoteContract.unPayedInterest==contract.unPayedInterest}?(${quoteContract.unPayedInterest==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.unPayedInterest}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.unPayedInterest==contract.unPayedInterest}?(${quoteContract.unPayedInterest==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							未还利息:</label>
+	                        <div class="form-control-static" th:text="${contract.unPayedInterest}">-</div>
+						</div>
+						<div th:class="${quoteContract.contractCode==contract.contractCode}?(${quoteContract.contractCode==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.contractCode}" class="col-sm-4 control-label">
+						    <i th:class="${quoteContract.contractCode==contract.contractCode}?(${quoteContract.contractCode==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+						    合同编号:</label>
+	                        <div class="form-control-static" th:text="${contract.contractCode}">-</div>
+						</div>
+						<div th:class="${quoteContract.productName==contract.productName}?(${quoteContract.productName==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.productName}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.productName==contract.productName}?(${quoteContract.productName==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							产品名称:</label>
+	                         <div class="form-control-static" th:text="${contract.productName}">-</div>
+						</div>
+						<div th:class="${quoteContract.yearIrr==contract.yearIrr}?(${quoteContract.yearIrr==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.yearIrr}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.yearIrr==contract.yearIrr}?(${quoteContract.yearIrr==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							年化利率(%):</label>
+	                         <div class="form-control-static" th:text="${contract.yearIrr}">-</div>
+						</div>
+						</div>
+					</div>
+           			<div class="col-xs-4">
+           			<div class="form-horizontal">
+           				<div th:class="${quoteContract.principal==contract.principal}?(${quoteContract.principal==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.principal}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.principal==contract.principal}?(${quoteContract.principal==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							投资本金:</label>
+	                        <div class="form-control-static" th:text="${contract.principal}">-</div>
+						</div>
+						<div th:class="${quoteContract.profit==contract.profit}?(${quoteContract.profit==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.profit}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.profit==contract.profit}?(${quoteContract.profit==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							收益:</label>
+	                        <div class="form-control-static" th:text="${contract.profit}">-</div>
+						</div>
+						<div th:class="${quoteContract.contractEndDate==contract.contractEndDate}?(${quoteContract.contractEndDate==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.contractEndDate}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.contractEndDate==contract.contractEndDate}?(${quoteContract.contractEndDate==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							合同到期日:</label>
+	                        <div  class="form-control-static" th:text="${contract.contractEndDate}">-</div>
+						</div>
+						
+						<div th:class="${quoteContract.term==contract.term}?(${quoteContract.term==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.term}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.term==contract.term}?(${quoteContract.term==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							期限:</label>
+	                        <div class="form-control-static" th:text="${contract.term}">--</div>
+						</div>
+						<div th:class="${quoteContract.paybackType==contract.paybackType}?(${quoteContract.paybackType==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.paybackType}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.paybackType==contract.paybackType}?(${quoteContract.paybackType==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							还款方式:</label>
+	                        <div class="form-control-static" th:text="${contract.paybackType}">--</div>
+						</div>
+						<div th:class="${quoteContract.ensureType==contract.ensureType}?(${quoteContract.ensureType==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.ensureType}" class="col-sm-4 control-label">
+							<i th:class="${quoteContract.ensureType==contract.ensureType}?(${quoteContract.ensureType==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+							保障方式:</label>
+	                        <div class="form-control-static" th:text="${contract.ensureType}">--</div>
+						</div>
+						<div th:class="${quoteContract.platform==contract.platform}?(${quoteContract.platform==null}?'form-group has-error':'form-group has-success'):'form-group has-error'">
+							<label th:attr="data-content=${quoteContract.platform}" class="col-sm-4 control-label">
+								<i th:class="${quoteContract.platform==contract.platform}?(${quoteContract.platform==null}?'glyphicon glyphicon-remove-sign':'glyphicon glyphicon-ok-sign'):'glyphicon glyphicon-remove-sign'"></i>
+								购买平台:
+							</label>
+	                        <div class="form-control-static" th:text="${contract.platform}">-</div>
+						</div>
+						</div>
+           			</div>
+           		</div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">协议文件</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="bs-example bs-example-images" data-example-id="image-shapes">
+				<a th:each="attachment:${attachments}" target="_blank" th:href="'/pic/'+${attachment.objectId}">
+    				<img data-src="holder.js/140x140" class="img-rounded" alt="140x140" th:src="'/pic/'+${attachment.objectId}" data-holder-rendered="true" style="width: 140px; height: 140px;" />
+  			  	</a>
+	  		  </div>
+            </div>
+            <div th:if="${quoteContract.workFlow=='待审核'}" class="box-footer">	
+              <p></p>
+              <div class="row">
+				<div class="col-xs-3">
+					
+			    </div>
+			    <div class="col-xs-2">
+			    </div>
+			    <div class="col-xs-2">
+				    <div class="form-group pull-left">
+					    <label>
+		                	<input type="radio" checked="checked" name="opinion" id="agree" />同意
+					    </label>
+	              		</div>
+					<div class="form-group pull-right">
+                		 <label>
+		                	<input  type="radio" name="opinion" id="reject" />拒绝
+					    </label>
+              		</div>
+			    </div>
+			    <div class="col-xs-2">
+			    	
+			    </div>
+			    <div class="col-xs-3">
+					
+			    </div>
+		      </div>
+              <div class="row">
+				<div class="col-xs-4">
+					
+			    </div>
+			    <div class="col-xs-4">
+					<div class="form-group">
+                		<textarea th:text="${quoteContract.auditRefuseReason}" id="reason" rows="5" style="width: 100%" ></textarea>
+              		</div>
+			    </div>
+			    <div class="col-xs-4">
+					
+			    </div>
+		      </div>
+		      
+                <div class="row">
+				<div class="col-xs-4">
+					
+			    </div>
+			    <div class="col-xs-1">
+			    	<div class="form-group">
+                		<button type="button" onclick="window.history.go(-1)" class="btn btn-block btn-primary btn-lg">返回</button>
+              		</div>
+			    </div>
+			    <div class="col-xs-2">
+			    </div>
+			    <div class="col-xs-1">
+			    	<div class="form-group">
+                		<button type="button" onclick="next()" class="btn btn-block btn-primary btn-lg">确认</button>
+              		</div>
+			    </div>
+			    <div class="col-xs-4">
+					
+			    </div>
+		      </div>
+		      
+            </div>
+            <div th:if="${quoteContract.workFlow!='待审核'}" class="box-footer">	
+              <p></p>
+                <div class="row">
+				<div class="col-xs-4">
+					
+			    </div>
+			    <div class="col-xs-1">
+			    </div>
+			    <div class="col-xs-2">
+			    	<div class="form-group">
+                		<button type="button" onclick="window.history.go(-1)" class="btn btn-block btn-primary btn-lg">返回</button>
+              		</div>
+			    </div>
+			    <div class="col-xs-1">
+			    </div>
+			    <div class="col-xs-4">
+					
+			    </div>
+		      </div>
+		      
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+    <script type="text/javascript" th:inline="javascript">
+    function next(){
+    	var id = /*[[${quoteContract.id}]]*/;
+    	var status = 'REJECT';
+    	 $('input[name="opinion"]:checked').each(function(){
+             if($(this).attr("id")=='agree'){
+            	status='PASSED';
+             }else{
+            	 if($('#reason').val().length==0){
+            	 	common.warning('请填写拒绝原因');
+            	 	return;
+            	 }
+             }
+             
+             $.ajax({
+                 url: '/contract/reservation/audit',
+                 type: "POST",
+                 data: {id:id,status:status,auditRefuseReason:$('#reason').val()},
+                 dataType: "json",
+                 success: function(data) {
+                    if(data.success){
+                    	common.success('操作成功');
+                    }else{
+                    	common.danger(data.firstMessage)
+                    }
+                 }
+             }); 
+         
+    	 });
+    }
+    
+    $(function(){
+    	 $('.contract').addClass('active');
+    	 $('.reservation').addClass('active');
+    	 $('.has-error label').attr("data-toggle","popover").attr("data-placement","top");
+    	 $('[data-toggle="popover"]').popover()
+    });
+    </script>
+</div>
+</body>
+</html>

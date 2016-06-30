@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>首页登录</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='01000')" />
+		<!--banner-->
+		<div class="box_wrap banner_box" style="height: 400px;">
+			<img src="/images/banner.jpg" alt="banner"/>
+			<div class="box_center" style="padding-top: 100px;box-sizing: border-box;height: 400px;">
+				<div class="text_img">
+					<img src="/images/text1.png" alt="img"/>
+					<img src="/images/text2.png" alt="img" class="dis_none"/>
+					<img src="/images/text3.png" alt="img" class="dis_none"/>
+				</div>
+				<div class="text_text">
+					<div class="">
+						<!--透明-->
+					</div>
+					<span>快鹿投资轻松管理</span>
+					<span class="dis_none">一键保障您的收益</span>
+					<span class="dis_none">快速转让获取流动资金</span>
+				</div>
+			</div>
+		</div>
+		<!--流程-->
+		<div class="box_wrap bgfff" style="line-height: 154px; border-bottom: 1px solid #e4e4e4;">
+			<div class="box_center text_center">
+				<img src="/images/liucheng2.png" alt="liucheng"/>
+			</div>			
+		</div>
+		<!--资产-->
+		<div class="mt_24 box_wrap">
+
+			<div class="box_center asset_box" sec:authorize="isAuthenticated()" th:if="${transferContracts.totalPages>0}">
+				<div class="asset_more">
+					<a th:href="@{/qc/center}" >
+						<img src="/images/images/newasset_03.png" alt="asset"/>
+					</a>
+				</div>
+				<div class="asset_main">
+					<div class="newAssery" th:each="item,status : ${transferContracts.content}" th:style="${status.last}?'border: none':''">
+						<p class="cf">
+							<a th:href="@{/qc/detail(id=${item.quoteContract.id})}" href="#" class="a_orange fs_16" th:text="${item.quoteContract.originalContract.productName}">《上海王》电影享乐计划1号076-270</a>
+						</p>
+						<table border="0" cellspacing="0" cellpadding="0" width="100%" class="mt_24">
+							<tr>
+								<td>
+									<span class="fs_26 col_orange mt-11" th:text="|${item.discountRate}%|">90%</span><br />
+									<span class="col_999">折扣率</span>
+								</td>
+								<td>
+									<span class="fs_16 col_666" th:text="${item.quoteContract.originalContract.paybackType}">到期一次性还本付息</span><br />
+									<span class="col_999">还款方式</span>
+								</td>
+							    <td>
+									<span class="fs_16 col_666" th:text="|${#numbers.formatDecimal(item.actualPrice, 0, 'COMMA', 2, 'POINT')}元|">5,102.00元</span><br />
+									<span class="col_999">转让价格</span>
+								</td>
+								<td>
+									<span class="fs_16 col_666" th:text="|${#numbers.formatDecimal(item.expProfit, 0, 'COMMA', 2, 'POINT')}元|">5,102.00元</span><br />
+									<span class="col_999">预期收益</span>
+								</td>
+								<td>
+									<span class="fs_20 col_666" th:text="|${item.remainingTime}天|">115天</span><br />
+									<span class="col_999">剩余期限</span>
+								</td>
+								<td class="text_center" style="width: 140px;">
+                                	<span class="col_999" th:text="|${item.tradedAssigneeSet.size()}人已预约|">9人已预约</span><br />
+									<a th:href="@{/transfer/detail(id=${item.id})}" class="ptbtn ptbtn_orange" style="width: 140px;">查看详情</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="downApp mt_24">
+        	<div class="box_center"><img src="/images/app.jpg" width="100%" height="368" /></div>
+        </div>
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var i = 0;
+			setInterval(function(){
+				
+				$(".text_img img").eq(i).hide("slow");
+				$(".text_img img").eq(i+1).show("slow");
+				$(".text_text span").eq(i).css("left","0").animate({left:'-500',opacity:'0'},600);
+				$(".text_text span").eq(i+1).show().css({left:'0',opacity:'1'});
+				i++;
+				if(i>2){
+					i=0;
+					$(".text_img img").eq(i+2).hide("slow");
+					$(".text_img img").eq(i).show("slow");
+					$(".text_text span").eq(i).css({left:'0',opacity:'1'});
+				}
+			},3000);
+			
+		</script>
+		
+	</body>
+</html>

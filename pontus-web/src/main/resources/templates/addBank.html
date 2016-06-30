@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-安全设置</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<style type="text/css">
+			label.error{
+				color:#ef7523;
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='03000')" />
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03004')" />
+			<div class="msg_main">
+			<div class="my-assets">
+                <ul class="tab-title tab-head cf">
+                    <li><a th:href="@{/cust/change-password}" href="#">修改密码</a></li>
+                    <li class="active">银行卡设置</li>
+                </ul>
+                <ul class="pw-content tab-content">
+                <li style="display:block;">
+            <!--添加银行卡start--> 
+            <form id="bankform" action="/cust/addbank" method="post">
+                            <ul class="amendPw">
+                                <li>
+                                    <span class="span1">银行：</span>
+									<select name="name" id="name" class="ipt">
+									</select>
+                                    <span class="col_orange"></span>
+                                </li>
+                                <li>
+                                    <span class="span1">卡号：</span>
+                                    <input type="text" class="ipt" name="account" id="account" value="" maxlength="25"/>
+									<span class="col_orange"></span>
+                                </li>
+                                
+                                <li>
+                                    <span class="span1">所属地：</span>
+									<div id="city_1" style="display: inline-block;">
+										<select class="prov ipt" id="selectProv" name="province" style="width: 164px;"></select>
+										<select class="city ipt" id="selectCity" name="city" style="width: 164px;margin-left: 10px;"></select>
+									</div>
+                                    <span class="col_orange"></span>
+                                </li>
+                                <li>
+                                    <span class="span1">开户行：</span>
+									<input type="text" class="ipt" name="subbranch" id="subbranch" value="" maxlength="20"/>
+                                    <span class="col_orange"></span>
+                                </li>
+                                <li>
+                                    <span class="span1">&nbsp;</span>
+                                    <a id="addBtn" href="#" class="q_btn ptbtn_orange" style="width: 182px; margin-top:20px;">添加</a>
+                                </li>
+                            </ul>
+                            <!--添加银行卡end-->                
+                </form>
+                </li>
+                </ul>
+            </div>
+         </div>
+		</div>
+		
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/linkageProvinceCity.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/bank.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		// <![CDATA[
+			$(function(){
+				var parent=$("#name");
+				for(var i=0;i<banks.length;i++){
+					$('<option name="name" value='+banks[i].name+'>'+banks[i].name+'</option>').appendTo(parent);
+				}
+			});
+			
+					$(function(){
+				$("#bankform").validate({
+				errorPlacement:function(error,element){
+					error.appendTo(element.parent());
+				},
+				rules: {
+					account: {
+						required : true,
+						creditcard: true
+					},
+					subbranch:{
+						required : true
+					}
+				},
+				messages: {
+					account: {
+						required : "请输入银行卡号！",
+						creditcard: "请输入正确的银行卡号！"
+					},
+					subbranch:{
+						required : "请输入开户支行！",
+					}
+				}
+			});
+		});
+		
+					//提交表单
+			$("#addBtn").click(function(){
+					$("#bankform").submit();
+			});
+			
+		// ]]>
+		</script>
+	</body>
+</html>

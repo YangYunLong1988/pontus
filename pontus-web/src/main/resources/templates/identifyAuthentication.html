@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的资产-身份认证</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/tiptool.css"/>
+		<style type="text/css">
+		.error{
+			color:#ef7523;
+		}
+		label[for]{
+			text-align:left;
+		}
+		.dis_sumbit{
+			background-color:#9E9793;
+		}
+		.border_div{
+			border:1px solid #dadada;
+		}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header" ></div>
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03003')" />
+			<div class="myuse_main">
+				<div class="fs_20" style="height: 34px;border-bottom: 2px solid #eee;">身份认证</div>
+				<form id="formId">
+				<ul>
+					<li>
+						<span class="span1">姓名：</span>
+						<input type="text" class="ipt" name="idCardName" id="idCardName" value="" maxlength="20"/>
+					</li>
+					<li>
+						<span class="span1">身份证号码：</span>
+						<input type="text" class="ipt" name="idCardAccount" id="idCardAccount" value="" maxlength="18"/>
+					</li>
+					<li>
+						<span class="span1">银行：</span>
+						<select name="name" id="name" class="ipt">
+						</select>
+					</li>
+					<li>
+						<span class="span1">银行卡号：</span>
+						<input type="text" class="ipt" name="account" id="account" value="" maxlength="20"/>
+					</li>
+					<li>
+						<span class="span1">所属地：</span>
+						<div id="city_1" style="display: inline-block;">
+							<select class="prov ipt" id="selectProv" name="province" style="width: 164px;"></select>
+							<select class="city ipt" id="selectCity" name="city" style="width: 164px;margin-left: 10px;"></select>
+						</div>
+					</li>
+					<li>
+						<span class="span1">开户行：</span>
+						<input type="text" class="ipt" name="subbranch" id="subbranch" value="" maxlength="48"/>
+					</li>
+					<li>
+						<span class="span1">居住城市：</span>
+						<div id="city_4" style="display: inline-block;">
+							<select class="prov ipt" id="selectProv2" name="residenceProvince" style="width: 104px;"></select> 
+							<select class="city ipt" id="selectCity2" name="residenceCity" style="width: 104px;margin-left: 13px;"></select>
+						</div>
+					</li>
+				</ul>
+					<input id="idCardA" name="idCardPositive" style="display:none"/>
+					<input id="idCardB" name="idCardOpposite" style="display:none"/>
+					<input id="idPersonalCard" name="personalCard" style="display:none"/>
+					<input type="hidden" th:value="${session.token}" name="token"/>
+				</form>
+				<div class="upload_photo">
+					<span class="pos_ab" style="top: 27px; left: 16px;">上传照片：</span>
+					<ul>
+						<li>
+							<p>身份证正面样例</p>
+							<div class="img border_div">
+								<img id="imgIdCardA" src=""/>
+							</div>
+							<div class="file_btn">
+								<input type="file" name="file" data-type="IDCARD_POSITIVE" id="inputIdCardA" value="" />
+								<a href="#">上传照片</a>
+							</div>
+						</li>
+						<li>
+							<p>身份证反面样例</p>
+							<div class="img border_div">
+								<img id="imgIdCardB" src=""/>
+							</div>
+							<div class="file_btn">
+								<input type="file" name="file" data-type="IDCARD_OPPOSITE" id="inputIdCardB" value="" />
+								<a href="#">上传照片</a>
+							</div>
+						</li>
+						<li>
+							<p>名片样例</p>
+							<div class="img border_div">
+								<img id="imgPersonalCard" src=""/>
+							</div>
+							<div class="file_btn">
+								<input type="file" name="file" data-type="CARD_PERSON" id="inputPersonalCard" value="" />
+								<a href="#">上传照片</a>
+							</div>
+						</li>
+					</ul>
+					<span class="col_orange">特别提醒：</span>
+					<p class="col_999" style="line-height: 24px;">身份证上的所有信息清晰可见，必须能看得清证件号；照片内容真实有效，不得做任何修改。支持jpg、bmp、gif、png格式的照片，大小不超过5M。</p>
+					<a href="javascript:;" id="nextStepId" class="mt_40 ptbtn ptbtn_orange" style="width: 260px;">立即认证</a>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="shade-box" id="errorTipView" style="display: none;">
+		<div class="shade">
+			<div class="close">
+			</div>
+			<div class="tip" style="text-align: center;">
+				<div style="margin-left: 0"></div>
+				<span class="tipContent"></span>
+			</div>
+			<div class="shade-btn" style="text-align: center;">
+				<a href="javascript:;" class="queding errorAuth" style="margin-left: 0;margin-top: 20px;">确定</a>
+			</div>
+		</div>
+		</div>
+	
+		<div th:replace="fragments/footer" ></div>
+		
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/linkageProvinceCity.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/linkageProvinceCity2.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/bank.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		// <![CDATA[
+						
+			$(function(){
+				var parent=$("#name");
+				for(var i=0;i<banks.length;i++){
+					$('<option name="name" value='+banks[i].name+'>'+banks[i].name+'</option>').appendTo(parent);
+				}
+			});
+			
+			//提交表单
+			$("#nextStepId").click(function(){
+				clearError();
+				if($(".error").length==0 && $(".dis_sumbit").length==0){
+					$("#formId").ajaxSubmit({
+						type:'post',
+						url:'/cust/submit-auth',
+						success:function(data){
+							console.log(data);
+							if(data=='true'){
+								location.href="/cust/identify-success";
+							}else{
+								$('#errorTipView .tipContent').html("认证失败！请填写正确身份认证信息重新认证。如有疑问，请联系相应平台客服。谢谢！");
+						        $('#errorTipView').show();
+						        $('.errorAuth').addClass("errorAuthClick");
+						        $(".errorAuthClick").click(function(){
+						        	location.href="/cust/identify-authentication";
+						        });
+							}
+						},
+						error:function(){
+							alert("通信网络异常");
+							location.href="/";
+						}
+					});
+					$("#nextStepId").addClass("dis_sumbit");
+				}
+			});
+			
+			//提示框
+			$('#errorTipView .close,#errorTipView .queding').on('click',function(){
+				$('#errorTipView').hide();
+			});
+			
+			String.prototype.endWith=function(str){
+				if(str==null||str==""||this.length==0||str.length>this.length){
+					return false;
+				}
+				if(this.substring(this.length-str.length)==str){
+					return true;
+				}else{
+					return false;
+				}
+			}
+			
+			function clearError(){
+				$("label[for]").each(function(){
+					if($(this).text()==""){
+						$(this).remove();
+					}
+				})
+			}
+			
+			$("#inputIdCardA").on("change",function(){
+				var self = this;
+				initUploadify(self,function(data,status){
+					uploadSuccess(data,status,'imgIdCardA','idCardA');
+				})
+			});
+			
+			$("#inputIdCardB").on("change",function(){
+				var self = this;
+				initUploadify(self,function(data,status){
+					uploadSuccess(data,status,'imgIdCardB','idCardB');
+				})
+			});
+			
+			$("#inputPersonalCard").on("change",function(){
+				var self = this;
+				initUploadify(self,function(data,status){
+					uploadSuccess(data,status,'imgPersonalCard','idPersonalCard');
+				})
+			});
+			
+			function initUploadify(self, callback){
+				var fileName=$(self).val().toLocaleLowerCase();
+				if(!fileName.endWith('.jpg') && !fileName.endWith('.jpeg') && !fileName.endWith('.png') && !fileName.endWith('.bmp')){
+					$(self).val();
+					$('#errorTipView .tipContent').html("支持jpg.jpeg.png.bmp格式!");
+			        $('#errorTipView').show();
+			        return;
+				}
+				if($(self).length==0){
+					$(self).val();
+					return ;
+				}
+				var sfile=self.files[0].size;
+				if(sfile>5242880){//
+					$(self).val();
+					$('#errorTipView .tipContent').html("文件大小超过限制（5M）!");
+			        $('#errorTipView').show();
+			        return ;
+				}
+				
+				var uploadType = $(self).attr("data-type");
+				var data = new FormData();
+				data.append('file',self.files[0]);
+				data.append('type', uploadType);
+				$.ajax({
+				    url: "/cust/upload",
+				    cache: false,
+				    data:data,
+				    contentType: false,
+				    processData: false,
+				    type: "POST",
+				    success: function(data){
+				    	callback(data);
+				    }
+				});
+			}
+			
+			function uploadSuccess(data,status,imgName,formName){
+				if(data.code==0){
+					$('#'+imgName).attr("src","/cust/thumbnail?id="+data.content);
+					$('#'+formName).val(data.content);
+				}
+			}
+		// ]]>
+		</script>
+		
+		<script type="text/javascript">
+		// <![CDATA[
+		jQuery.validator.addMethod("isIdCardNo", function(value, element) {  
+	     	return this.optional(element) || isIdCardNo(value);    
+	    }, "请输入正确的身份证号码!"); 
+		
+		jQuery.validator.addMethod("isChinese", function(value, element) {       
+	         return this.optional(element) || /^[\u4e00-\u9fa5]+$/.test(value);       
+	    }, "匹配汉字"); 
+		
+		$(function(){
+			$("#formId").validate({
+				errorPlacement:function(error,element){
+					error.appendTo(element.parent());
+				},
+				rules: {
+					idCardName : {
+						required : true,
+						isChinese:true
+					},
+					idCardAccount : {
+						required : true,
+						isIdCardNo:true,
+						remote:{
+							url:"/cust/check-unique-idcard",
+							type:"POST",
+							data:{
+								idcard:function(){return $("#idCardAccount").val();}
+							}
+						}
+					},
+					name: {
+						required : true
+					},
+					account: {
+						required : true,
+						creditcard: true
+					},
+					subbranch:{
+						required : true
+					}
+				},
+				messages: {
+					idCardName: {
+						required: "请输入姓名！",
+						isChinese:"请输入正确的名称!"
+					},
+					idCardAccount : {
+						required : "请输入身份证号码！",
+						isIdCardNo:"请输入正确的身份证号码(且至少18岁)!",
+						remote:"身份证已被注册认证！"
+					},
+					name: {
+						required : "请选择开户银行！"
+					},
+					account: {
+						required : "请输入银行卡号！",
+						creditcard: "请输入正确的银行卡号！"
+					},
+					subbranch:{
+						required : "请输入开户支行！",
+					}
+				}
+			});
+		});
+		
+		//身份证验证
+		function isIdCardNo(num) {
+		    var factorArr = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1);
+		    var parityBit = new Array("1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2");
+		    var varArray = new Array();
+		    var intValue;
+		    var lngProduct = 0;
+		    var intCheckDigit;
+		    var intStrLen = num.length;
+		    var idNumber = num;
+		    // initialize
+		    if ((intStrLen != 15) && (intStrLen != 18)) {
+		        return false;
+		    }
+		    // check and set value
+		    for (var i = 0; i < intStrLen; i++) {
+		        varArray[i] = idNumber.charAt(i);
+		        if ((varArray[i] < '0' || varArray[i] > '9') && (i != 17)) {
+		            return false;
+		        } else if (i < 17) {
+		            varArray[i] = varArray[i] * factorArr[i];
+		        }
+		    }
+
+		    if (intStrLen == 18) {
+		        //check date
+		        var date8 = idNumber.substring(6, 14);
+		        if (isDate8(date8) == false) {
+		            return false;
+		        }
+		        // calculate the sum of the products
+		        for (i = 0; i < 17; i++) {
+		            lngProduct = lngProduct + varArray[i];
+		        }
+		        // calculate the check digit
+		        intCheckDigit = parityBit[lngProduct % 11];
+		        // check last digit
+		        if (varArray[17] != intCheckDigit) {
+		            return false;
+		        }
+		    }
+		    else {        //length is 15
+		        //check date
+		        var date6 = idNumber.substring(6, 12);
+		        if (isDate6(date6) == false) {
+		            return false;
+		        }
+		    }
+		    return true;
+		}
+		function isDate6(sDate) {
+			var date=new Date();
+			var cyear=date.getYear();
+		    if (!/^[0-9]{6}$/.test(sDate)) {
+		        return false;
+		    }
+		    var year, month, day;
+		    year = sDate.substring(0, 4);
+		    month = sDate.substring(4, 6);
+		    if (year < 1700 || year > 2500) return false
+		    if (month < 1 || month > 12) return false
+		    var ans=cyear-(year-1900);
+		    if(ans<18) return false;
+		    return true
+		}
+
+		function isDate8(sDate) {
+			var date=new Date();
+			var cyear=date.getYear();
+		    if (!/^[0-9]{8}$/.test(sDate)) {
+		        return false;
+		    }
+		    var year, month, day;
+		    year = sDate.substring(0, 4);
+		    month = sDate.substring(4, 6);
+		    day = sDate.substring(6, 8);
+		    var iaMonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+		    if (year < 1700 || year > 2500) return false;
+		    var ans=cyear-(year-1900);
+		    if(ans<18) return false;
+		    if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) iaMonthDays[1] = 29;
+		    if (month < 1 || month > 12) return false
+		    if (day < 1 || day > iaMonthDays[month - 1]) return false
+		    return true
+		}
+		// ]]>
+		</script>
+		
+	</body>
+</html>

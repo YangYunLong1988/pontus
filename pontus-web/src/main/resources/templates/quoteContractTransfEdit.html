@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-开始转让</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>		
+		<style type="text/css">
+		label.error {
+			color: #ef7523;
+			width: inherit;
+			margin-left: 10px;
+		}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='03000')" />
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				个人资料
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03006')" />
+			<div class="myuse_main">
+				<form th:action="@{/qc/transf}" method="post" id="transfForm">
+				<input type="hidden" name="id" id="contractId" th:value="${contract.id}" />
+				<div class="fs_20" style="height: 34px;border-bottom: 2px solid #eee;">合同编号 <span class="col_orange" th:text="${contract.contractCode}">123456</span></div>
+				<ul style="margin-top: 35px;">
+					<li>
+						<span class="span2">投资本金：</span>
+                        <span class="text" th:text="${#numbers.formatDecimal(contract.principal, 0, 'COMMA', 2, 'POINT')}">1,125,225.00</span>
+                        <span class="monad">元</span>
+					</li>
+                    <li>
+						<span class="span2">债权价值：</span>
+                        <span class="text" th:text="${#numbers.formatDecimal(extValue, 0, 'COMMA', 2, 'POINT')}">1,125,225.00</span>
+                        <span class="monad">元</span>
+					</li>
+					<li>
+						<span class="span2">折扣率：</span>
+                        <input style="width:120px;" type="text" class="ipt" name="rate" id="rate"  /> 
+                        <span class="monad">%</span>
+                        <label class="error" for="rate"></label>
+					</li>
+					
+                     <li>
+						<span class="span2">转让价格：</span>
+                        <span id="transfPrice" class="text" th:text="${#numbers.formatDecimal(extValue, 0, 'COMMA', 2, 'POINT')}">1,125,225.00</span>
+                        <span class="monad">元</span>
+                        <a class="transferTip" id="transferTip" href="#">
+                        	<img src="/images/order_tip.png" />
+                        </a>
+                        <div class="info">
+                        	<i class="triangle"></i>
+                            <div>
+                                 <p>1)当期日期 &lt;合同到期日期;</p>
+  							     <p>1.1）还款方式为"到期还本付息"; =折扣率*投资本金*（1+年化收益率*（当前日期-起息日）/365）</p>
+  							     <p>1.2）还款方式为"每月/季/半年付息到期还本"; =折扣率*（本金+【未还的利息-（合同到期日期-当前日期）/（合同到期日期-起息日）*（本息和-投资本金）】）</p>
+                             	 <p>2）当前日期 = 合同到期日; =折价率*（投资本金+未还的利息）</p>
+                                 <p>3）当前日期 &gt; 合同到期日; =折扣率* （投资本金+未还的利息）*（1+展期年化收益率*（当前日期-合同到期日期）/365）</p>
+                             </div>
+                        </div>
+					</li>
+					<li>
+						<span class="span2">转让手续费：</span>
+                        <span class="text">推广期间不收取任何费用</span>
+					</li>
+                    <li>
+						<span class="span2">&nbsp;</span>
+                        <a href="javascript:;" class="ptbtn ptbtn_orange wd120"  app-submit="transfForm">转让</a>
+					</li>
+				</ul>
+				</form>
+			</div>
+		</div>
+		<!--版权-->
+			<!--版权-->
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>	
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/numeral.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/com.js" type="text/javascript"></script>	
+		
+		<script type="text/javascript">
+		// <![CDATA[
+		$.validator.addMethod("regex", function(value, element, regexp) {
+			var check = false;
+			var re = new RegExp(regexp);
+			return this.optional(element) || re.test(value);
+		}, "Please check your input.");
+		
+		$("#transfForm").validate({
+			ignore : ".ignore",
+			rules : {
+				rate:{
+					required : true,
+					regex : /^[1-9][0-9](.[0-9]{2})?$/,
+					range:[10,100]
+				}
+			},
+			messages : {
+				rate:{
+					required : "请输入折扣率",
+					regex:"区间为10%--100%之间，至多两位小数",
+					range:"区间为10%--100%之间，至多两位小数"
+				}
+			}
+		});	  	
+		$("#rate").on("keyup",function(){
+			if(!$("#rate").valid()){
+				return;
+			}
+			var data = {"id":$("#contractId").val(),"rate":$(this).val()}
+			$.get("/qc/calculate-transf-price",data,function(result){
+				if(result.code == 0){
+					var string = numeral(result.content).format('0,0.00');
+					$("#transfPrice").text(string);
+				}
+			})
+		});
+			$("#transferTip").hover(function(){
+					$('.info').fadeIn();
+				},function(){
+					$('.info').fadeOut();
+			  });
+		// ]]>
+	</script>
+	</body>
+</html>

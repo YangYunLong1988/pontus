@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>登录</title>
+<link rel="stylesheet" type="text/css" href="/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/css/index.css" />
+</head>
+<body>
+	<!--页头-->
+	<div th:replace="fragments/header" />
+	<!--登录框-->
+	<div class="mt_24 box_wrap" style="min-height:540px;">
+		<div class="box_center login_box bgfff">
+			<img src="/images/images/loginimg_03.jpg" class="pos_ab" style="left: 0; top: 0;" />
+			<div class="login_main">
+				<form id="loginform" th:action="@{/login}" action="/login" method="post" autocomplete="off">
+					<h3 class="fs_24">登录</h3>
+					<input type="text" class="mt_40 ipt login_user" name="phoneNumber" th:value="${username}" placeholder="手机号" />
+					<p class="login_error">&nbsp;</p>
+					<input type="password" class="ipt login_pass" name="password" id="" placeholder="密码" />
+					<p th:text="${param.error}?'您输入的帐号或密码有误':'&nbsp;'"></p>
+					<div class="text-left">
+						<input type="checkbox" name="rememberPhoneNumber" checked="checked" />&nbsp;记住账号 <a href="/forget-pwd-one" class="fr a_line">忘记密码</a>
+					</div>
+					<br /> <a href="javascript:;" id="login" class="ptbtn ptbtn_orange" style="width: 100%; line-height: 40px; font-size: 16px;">登录</a>
+					<div class="mt_24">
+						<span class="col_999">没有账号？</span> <a href="/register" class="col_orange a_line">我要注册</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--版权-->
+	<div th:replace="fragments/footer" />
+	<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$("#login").on("click", function() {
+			$("#loginform").submit();
+		});
+	</script>
+</body>
+</html>

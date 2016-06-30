@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>个人信息</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/css/index.css" />
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header" />
+			<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				个人资料
+			</div>
+		</div>
+		
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03002')" />
+			<div class="myuse_main">
+			<div class="fs_20" style="height: 34px;border-bottom: 2px solid #eee;">个人资料</div>
+				<ul>
+					<li>
+						<span class="span2">手机号：</span>
+                        <span class="text" th:text="${user.phone}"></span>
+					</li>
+					<li>
+					<form id ="adressform" th:action="@{/cust/change-adress}" method="post">
+						<span class="span2">居住地：</span>
+                        <span class="text" th:text="${user.adress}"></span>
+                        <span id="city_4" class="amendChose none">
+							<select class="prov ipt" id="selectProv" name="province"  th:attr="data-default=${user.residenceProvince}" style="width: 104px;"></select>
+							<select class="city ipt" id="selectCity" name="city" th:attr="data-default=${user.residenceCity}" style="width: 104px;margin-left: 13px;"></select>
+						</span>
+						<a class="amend" href="#">修改</a>
+					</form>
+					</li>
+					
+					<li>
+					 <form id ="emailform" th:action="@{/cust/change-email}" method="post">
+							<span class="span2">邮箱：</span>
+	                        <span class="text" th:text="${user.email}"> </span>
+							<span class="amendChose none"><input type="text" class="ipt" name="email" id="email" th:value="${user.email}" /></span>
+                        	<a class="amend" href="#">修改</a>
+                        </form>
+					</li>
+				</ul>
+			</div>
+		</div>
+				<!--版权-->
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/city.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/linkageProvinceCity.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+				$("a.amend").click(function(){
+					if($(this).text()=='修改'){
+					$(this).siblings('.amendChose').show()
+							.siblings('.text').hide();
+					$(this).text('保存');}else{
+						$(this).parents('form:eq(0)').submit();
+					}
+				
+				});
+			$(function(){
+			$("#emailform").validate({
+				errorPlacement:function(error,element){
+					error.appendTo(element.parent());
+				},
+				rules: {
+					email: {
+						email: true
+					}
+				},
+				messages: {
+					email: {
+						email: "邮件格式有误！"
+					}
+				}
+			});
+		});	
+				
+		</script>
+	</body>
+</html>

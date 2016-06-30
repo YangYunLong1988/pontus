@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的钱包</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body>
+		<!--页头-->
+		<div class="box_wrap header_box">
+			<div class="box_center">
+				<div class="header">
+					<span>客服电话：<span style="color: #ef7523;">400-1236-4562</span></span>
+					<div class="fr">
+						<a href="#">登录</a>
+						<a href="#">注册</a>
+						<a style="color: #ddd;">|</a>
+						<a href="#">消息</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--导航-->
+		<div class="box_wrap nav_box">
+			<div class="box_center cf">
+				<div class="logo fl">
+					<a href="#"><img src="images/logo.png"/></a>
+				</div>
+				<div class="nav fr">
+					<ul>
+						<li>
+							<a href="#">首页</a>
+						</li>
+						<li>
+							<a href="#">交易中心</a>
+						</li>
+						<li class="active">
+							<a href="#">我的账户</a>
+						</li>
+						<li>
+							<a href="#">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				个人资料
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div class="myuser_nav">
+				<ul>
+					<li>
+						<a href="#">账户中心</a>
+					</li>
+                    <li class="current">
+						<a href="#">我的钱包</a>
+					</li>
+					<li>
+						<a href="#">个人资料</a>
+					</li>
+					<li>
+						<a href="#">身份认证</a>
+					</li>
+					<li>
+						<a href="#">安全设置</a>
+					</li>
+					<li class="">
+						<a href="#">我的资产</a>
+					</li>
+					<li>
+						<a href="#">系统消息</a>
+					</li>
+				</ul>
+			</div>
+			<div class="msg_main">
+            	<div class="main-title">开通我的钱包</div>
+                <div class="mt_24">
+                	<!--第一步-->
+                	<img src="images/kaitong01.png" width="745" height="64">
+                    <!--第二步
+                	<img src="images/kaitong02.png" width="745" height="64">
+                    -->
+                    <!--第三步
+                	<img src="images/kaitong03.png" width="745" height="64">
+                    -->
+                    <!--第四步
+                	<img src="images/kaitong04.png" width="745" height="64">
+                    -->
+                    <!--第五步
+                	<img src="images/kaitong05.png" width="745" height="64">
+                    -->
+                </div>
+                
+                <!--未注册-->
+                <form>
+                    <ul class="uw-userinfo">
+                        <li><label>真实姓名：</label><span>张大宝</span></li>
+                        <li><label>身份证号：</label><span>310*************88</span></li>
+                        <li><label style="vertical-align:top;">托管账号：<br>（宝付）</label><span>189******78</span></li>
+                        <li><label>&nbsp;</label><a class="guapaiBtn02 wd120" href="javascript:;">下一步</a></li>
+                    </ul>
+                </form>
+                
+                <!--已注册-->
+                <form style="display:none;">
+                    <ul class="uw-userinfo">
+                        <li><label>真实姓名：</label><span>张大宝</span></li>
+                        <li><label>身份证号：</label><span>310*************88</span></li>
+                        <li><label style="vertical-align:top;">托管账号：<br>（宝付）</label><span>189******78</span></li>
+                        <li><label>验证码：</label><input class="txt code" type="password"><a class="getCode codeBd01" href="javascript:;">获取短信验证码</a></li>
+                        <li><label>&nbsp;</label><a class="guapaiBtn02 wd120" href="javascript:;">下一步</a></li>
+                    </ul>
+                </form>
+                <!--设置交易密码-->
+                 <form style="display:none;">
+                    <ul class="uw-userinfo">
+                        <li><label>交易密码：</label><input class="txt code" type="text" placeholder="8~12位字母+数字"><span class="errTip">交易密码应为8~12位字母+数字！</span></li>
+                        <li><label>交易密码确认：</label><input class="txt code" type="text" placeholder="8~12位字母+数字"></li>
+                        <li><label>&nbsp;</label><a class="guapaiBtn02 wd120" href="javascript:;">确定</a></li>
+                    </ul>
+                </form>
+                
+                 <!--设置交易密码-->
+                 <form style="display:none;">
+                    <ul class="uw-userinfo">
+                    	<li><label>姓名：</label><span>张大宝</span></li>
+                        <li>
+                            <label>银行储蓄卡：</label>
+                            <select class="csbank">
+                            	<option>招商银行</option>
+                                <option>中国银行</option>
+                            </select>
+                        </li>
+                        <li><label>卡号：</label><input class="txt test" type="text" placeholder=""><span class="errTip">交易密码应为8~12位字母+数字！</span></li>
+                        <li><label>银行预留手机号：</label><input class="txt test" type="text" placeholder=""></li>
+                        <li><label>验证码：</label><input class="txt code" type="password"><a class="getCode codeBd01" href="javascript:;">获取短信验证码</a></li>
+                    </ul>
+                    <div class="limit-in mt_20 clearfix">
+                    	<div class="title fl">限额说明：</div>
+                        <div class="fl">
+                        	<table border="0" cellspacing="0" cellpadding="0" width="100%" class="asset_table03 fl">
+                                <tr>
+                                    <th>客户类型</th>
+                                    <th>单笔限额（元）</th>
+                                    <th>日累计限额（元）</th>
+                                    <th>备注</th>
+                                </tr>
+                                <tr>
+                                    <td>电子口令卡</td>
+                                    <td>500</td>
+                                    <td>1000</td>
+                                    <td style="width:140px; padding:0 10px;" rowspan="4">充值仅支持借记卡，并请关注银行限额<br><span class="col_999 fs_12">
+工商银行客服热线：95588</span></td>
+                                </tr>
+                                <tr>
+                                    <td>短信认证</td>
+                                    <td>2000</td>
+                                    <td>5000</td>
+                                </tr>
+                                <tr>
+                                     <td>电子密码</td>
+                                    <td>50万</td>
+                                    <td>100万</td>
+                                </tr>
+                                <tr>
+                                    <td>U盾</td>
+                                    <td>100万</td>
+                                    <td>100万</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="ml_130 mt_40"><a class="guapaiBtn02 wd120" href="javascript:;">绑定</a></div>
+                </form>
+			</div>
+		</div>
+		<!--版权-->
+		<div class="copy_box">
+			版权所有 &copy;XXXXXXXX有限公司 沪ICP备XXXXXXXXXX
+		</div>
+        
+
+        
+		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>	
+        <script type="text/javascript" src="js/common.js"></script>	
+		
+		<script type="text/javascript">
+			var copy = document.getElementsByClassName("copy_box")[0];
+			var copyH = copy.offsetTop;
+			var webH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(copyH<webH){
+				copy.style.position = "fixed";
+				copy.style.bottom = "0";
+			}
+		
+		</script>
+		
+		
+	</body>
+</html>

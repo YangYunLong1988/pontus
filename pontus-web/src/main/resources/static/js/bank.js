@@ -1,0 +1,85 @@
+var banks = [{
+    "name": "中国工商银行",
+    "code": "00080003",
+    "single": "50000",
+    "total": "50000",
+    "css": "gongshang"
+}, {
+    "name": "中国农业银行",
+    "code": "00080004",
+    "single": "50000",
+    "total": "100000",
+    "css": "nongye"
+}, {
+    "name": "中国银行",
+    "code": "00080001",
+    "single": "50000",
+    "total": "500000",
+    "css": "zhongguo"
+}, {
+    "name": "中国建设银行",
+    "code": "00080005",
+    "single": "200000",
+    "total": "500000",
+    "css": "jianshe"
+}, {
+    "name": "兴业银行",
+    "code": "00080011",
+    "single": "50000",
+    "total": "50000",
+    "css": "xingye"
+}, {
+    "name": "中国光大银行",
+    "code": "00080013",
+    "single": "200000",
+    "total": "500000",
+    "css": "guangda"
+}, {
+    "name": "中国邮政储蓄银行",
+    "code": "00080016",
+    "single": "5000",
+    "total": "5000",
+    "css": "youzheng"
+}, {
+    "name": "深圳平安银行",
+    "code": "00080014",
+    "single": "500000",
+    "total": "-1",
+    "css": "pingan"
+}, {
+    "name": "中信银行",
+    "code": "00080012",
+    "single": "1000000",
+    "total": "1000000",
+    "css": "zhongxin"
+}, {
+    "name": "上海银行",
+    "code": "00080015",
+    "single": "5000",
+    "total": "50000",
+    "css": "shanghai"
+}, {
+    "name": "北京银行",
+    "code": "00080020",
+    "single": "5000",
+    "total": "5000",
+    "css": "beijing"
+}, {
+    "name": "交通银行",
+    "code": "00080006",
+    "single": "20000",
+    "total": "20000",
+    "css": "jiaotong"
+}, {
+    "name": "广东发展银行",
+    "code": "00080029",
+    "single": "1000000",
+    "total": "-1",
+    "css": "guangfa"
+}, {
+    "name": "中国民生银行",
+    "code": "00080009",
+    "single": "1000000",
+    "total": "-1",
+    "css": "minsheng"
+}];

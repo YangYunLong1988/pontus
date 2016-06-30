@@ -1,0 +1,31 @@
+<div class="box_wrap header_box">
+	<div class="box_center">
+		<div class="header">
+			<span></span>
+				<div class="fr" sec:authorize="isAnonymous()">
+					<a th:href="@{/login}" href="/login">登录</a>
+					<a th:href="@{/register}" href="/register">注册</a>
+					<a style="color: #ddd;">|</a>
+				</div>
+				<div class="fr" sec:authorize="isAuthenticated()">
+					<a href="javascript:;">欢迎 <span sec:authentication="principal.vagueUsername"></span></a> <a th:href="@{/logout}" href="/logout">退出</a>
+					<a style="color: #ddd;">|</a>
+				</div>
+		</div>
+	</div>
+</div>
+<!--导航-->
+<div class="box_wrap nav_box">
+	<div class="box_center cf">
+		<div class="logo fl">
+			<a th:href="@{/}"><img th:src="@{/images/logo.png}" src="images/logo.png" /></a>
+		</div>
+		<div class="nav fr">
+			<ul>
+				<li th:class="${current=='01000'}?'active'"><a th:href="@{/}" href="#">首页</a></li>
+				<li th:class="${current=='02000'}?'active'"><a th:href="@{/qc/center}" href="#">交易中心</a></li>
+				<li th:class="${current=='03000'}?'active'"><a th:href="@{/cust/my}" href="#">我的账户</a></li>
+			</ul>
+		</div>
+	</div>
+</div>

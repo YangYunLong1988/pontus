@@ -1,0 +1,73 @@
+.shade-box{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	filter:alpha(opacity=30);
+	background-color: rgba(0,0,0,0.5);
+}
+.shade{
+	position: absolute;
+	left: 34%;
+	top: 36%;
+	box-sizing: border-box;
+	width: 522px;
+	height: 272px;
+	border-radius: 4px;
+	border-top: 5px solid #EF7523;
+	background-color: #fff;
+}
+.close, .tclose{
+	position: absolute;
+	top: 14px;
+	right: 12px;
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
+	background: url(/images/close.png) no-repeat center center;
+}
+.tip{
+	margin-top: 78px;
+	margin-bottom: 70px;
+	width: 100%;
+	height: 38px;
+	line-height: 38px;
+	font-size: 20px;
+	color: #333;
+}
+.tip div{
+	display: inline-block;
+	margin-left: 140px;
+	margin-right: 20px;
+	vertical-align: text-bottom;
+	width: 42px;
+	height: 38px;
+}
+.shade-btn{
+	width: 100%;
+	height: 78px;
+	line-height: 78px;
+	border-top: 1px solid #dfdfdf;
+}
+.shade-btn a{
+	display: inline-block;
+	width: 120px;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	border-radius: 4px;
+}
+.shade-btn a.queding{
+	color: #fff;
+	margin-left: 128px;
+	background-color: #EF7523;
+}
+.shade-btn a.quxiao{
+	margin-left: 28px;
+	color: #999;
+	box-sizing: border-box;
+	border: 1px solid #d7d7d7;
+	background-color: #f0f0f0;
+}

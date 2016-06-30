@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-安全设置</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body>
+		<!--页头-->
+		<div class="box_wrap header_box">
+			<div class="box_center">
+				<div class="header">
+					<span>客服电话：<span style="color: #ef7523;">400-1236-4562</span></span>
+					<div class="fr">
+						<a href="#">登录</a>
+						<a href="#">注册</a>
+						<a style="color: #ddd;">|</a>
+						<a href="#">消息</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--导航-->
+		<div class="box_wrap nav_box">
+			<div class="box_center cf">
+				<div class="logo fl">
+					<a href="#"><img src="images/logo.png"/></a>
+				</div>
+				<div class="nav fr">
+					<ul>
+						<li>
+							<a href="#">首页</a>
+						</li>
+						<li>
+							<a href="#">交易中心</a>
+						</li>
+						<li class="active">
+							<a href="#">我的账户</a>
+						</li>
+						<li>
+							<a href="#">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div class="myuser_nav">
+				<ul>
+					<li>
+						<a href="#">用户中心</a>
+					</li>
+					<li>
+						<a href="#">个人资料</a>
+					</li>
+					<li>
+						<a href="#">身份认证</a>
+					</li>
+					<li class="current">
+						<a href="#">安全设置</a>
+					</li>
+					<li>
+						<a href="#">我的资产</a>
+					</li>
+					<li>
+						<a href="#">系统消息</a>
+					</li>
+				</ul>
+			</div>
+			<div class="msg_main">
+				<div class="my-assets">
+                	<ul class="tab-title tab-head cf">
+                    	<li class="active">修改密码</li>
+                        <li>银行卡设置</li>
+                    </ul>
+                    <ul class="pw-content tab-content">
+                    	<li style="display:block;">
+                        	<ul class="amendPw">
+                                <li>
+                                    <span class="span1">原密码：</span>
+                                    <input type="text" class="ipt" name="" id="" value="" />
+                                </li>
+                                <li>
+                                    <span class="span1">密码：</span>
+                                    <input type="text" class="ipt" name="" id="" value="" />
+                                    <span class="spanTip">6-16位字母、数字、符号，至少任意两种组合</span>
+                                </li>
+                                
+                                <li>
+                                    <span class="span1">确认密码：</span>
+                                    <input type="text" class="ipt" name="" id="" value="" />
+                                </li>
+                                <li>
+                                    <span class="span1">&nbsp;</span>
+                                    <a href="#" class="q_btn ptbtn_orange" style="width: 182px; margin-top:20px;">确定</a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                    	<li style="display:none;">
+                        	<div class="returnBank">
+                                <div class="col_999 mt_20">请您选择最终回款的银行卡</div>
+                                <div class="bankInfo" style=" margin-top:20px;">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <a class="abank active clearfix" href="javascript:;">
+                                                <i class="bank gongshang fl"></i>
+                                                <span class="bankname fl">
+                                                    <span class="name">中国工商银行</span><br>
+                                                    <span class="num mt_5">尾号3007&nbsp;&nbsp;储蓄卡</span>
+                                                </span>
+                                                <span class="chose fr mr_20">
+                                                    <i class="icon radio"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="ml_20">
+                                            <a class="abank clearfix" href="javascript:;">
+                                                <i class="bank gongshang fl"></i>
+                                                <span class="bankname fl">
+                                                    <span class="name">中国工商银行</span><br>
+                                                    <span class="num mt_5">尾号3007&nbsp;&nbsp;储蓄卡</span>
+                                                </span>
+                                                <span class="chose fr mr_20">
+                                                    <i class="icon radio"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="mt_20">
+                                            <a class="addbank" href="javascript:;">
+                                                <i class="icon add"></i><br>
+                                                <span>添加银行卡</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                           <!--添加银行卡start--> 
+                            <ul class="amendPw dis_none">
+                                <li>
+                                    <span class="span1">银行：</span>
+                                    <select name="" class="ipt">
+                                        <option value=""></option>
+                                    </select>
+                                    <span class="col_orange">请输入XXX</span>
+                                </li>
+                                <li>
+                                    <span class="span1">卡号：</span>
+                                    <input type="text" class="ipt" name="" id="" value="" />
+									<span class="col_orange">请输入XXX</span>
+                                </li>
+                                
+                                <li>
+                                    <span class="span1">所属地：</span>
+                                    <div id="city_1" style="display: inline-block;">
+                                        <select class="prov ipt" style="width: 164px;"></select><select class="city ipt" style="width: 164px;margin-left: 10px;" disabled="disabled"></select>
+                                    </div>
+                                    <span class="col_orange">请输入XXX</span>
+                                </li>
+                                <li>
+                                    <span class="span1">开户行：</span>
+                                    <select name="" class="ipt">
+                                        <option value=""></option>
+                                    </select>
+                                    <span class="col_orange">请输入XXX</span>
+                                </li>
+                                <li>
+                                    <span class="span1">&nbsp;</span>
+                                    <a id="addBtn" href="#" class="q_btn ptbtn_orange" style="width: 182px; margin-top:20px;">添加</a>
+                                </li>
+                            </ul>
+                            <!--添加银行卡end--> 
+                            
+                            <!--添加银行成功卡start--> 
+                            <div class="addsucces dis_none">
+                            	<h4>添加成功</h4>
+                                <p>5秒后返回到银行卡设置页</p>
+                            </div>
+                            <!--添加银行成功卡end--> 
+                        </li>
+                    </ul>
+                </div>				
+			</div>
+		</div>
+		<!--版权-->
+		<div class="copy_box">
+			版权所有 &copy;XXXXXXXX有限公司 沪ICP备XXXXXXXXXX
+		</div>
+		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>	
+        <script type="text/javascript" src="js/common.js"></script>	
+		<script src="js/city.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.cityselect.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$("#city_1").citySelect({nodata:"none",required:false});
+				$("#city_4").citySelect({prov:"广西", city:"梧州", dist:"蒙山县"});
+			});
+		</script>
+		<script type="text/javascript">
+			var copy = document.getElementsByClassName("copy_box")[0];
+			var copyH = copy.offsetTop;
+			var webH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(copyH<webH){
+				copy.style.position = "fixed";
+				copy.style.bottom = "0";
+			}
+		</script>
+		
+		
+	</body>
+</html>

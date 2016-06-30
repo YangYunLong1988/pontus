@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		font-size: 13px;
+	}
+	a{
+		text-decoration: none;
+	}
+	table {
+		width: 500px;
+}
+</style>
+</head>
+<body>
+<h3>timer started...</h3>
+<hr />
+<table>
+	<tr>
+		<td>1</td>
+		<td>更新转让价格</td>
+		<td><a href="javascript:exec('updateTransferActualPrice');">执行</a></td>
+	</tr>
+</table>
+<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	function exec(name){
+		$.get("/exec",{"t":name},function(result){
+			if(result.code==0){
+				alert("执行成功");
+			}else{
+				alert("执行失败");
+			}
+		});
+	}
+</script>
+</body>
+</html>

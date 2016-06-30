@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的资产-身份认证</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<style type="text/css">
+		.error{
+			color:#ef7523;
+		}
+		label[for]{
+			text-align:left;
+		}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header" ></div>
+		
+		<!--我的账户-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center bgfff text_center" style="padding-top: 30px;min-height: 500px;">
+				<h3 class="fs_24">注册</h3>
+				<img src="/images/images/images/zhuce3_03.jpg" class="mt_24"/>
+				<p class="text_center fs_20" style="margin-top: 66px;">
+					<img src="/images/images/dui.png"/>
+					恭喜您，注册成功！<span class="col_orange">3秒</span> 后自动跳转首页
+				</p>
+				<p style="margin-top: 50px;">
+					<a href="/" class="indexbtn">去首页</a>
+				</p>
+			</div>
+		</div>
+		
+		<div th:replace="fragments/footer" ></div>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		// <![CDATA[
+			
+			setTimeout(function(){
+				location.href="/";
+			},3000);
+		// ]]>
+		</script>
+	</body>
+</html>

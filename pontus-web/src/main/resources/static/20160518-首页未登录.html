@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>首页未登录</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body class="bgf4">
+		<!--页头-->
+		<div class="box_wrap header_box">
+			<div class="box_center">
+				<div class="header">
+					<span>客服电话：<span style="color: #ef7523;">400-1236-4562</span></span>
+					<div class="fr">
+						<a href="#">登录</a>
+						<a href="#">注册</a>
+						<a style="color: #ddd;">|</a>
+						<a href="#">消息</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--导航-->
+		<div class="box_wrap nav_box">
+			<div class="box_center cf">
+				<div class="logo fl">
+					<a href="#"><img src="images/logo.png"/></a>
+				</div>
+				<div class="nav fr">
+					<ul>
+						<li class="active">
+							<a href="#">首页</a>
+						</li>
+						<li>
+							<a href="#">交易中心</a>
+						</li>
+						<li>
+							<a href="#">我的账户</a>
+						</li>
+						<li>
+							<a href="#">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--banner-->
+		<div class="box_wrap banner_box">
+			<img src="images/banner.jpg" alt="banner"/>
+			<div class="box_center" style="padding-top: 190px;box-sizing: border-box;">
+				<div class="text_img">
+					<img src="images/text1.png" alt="img"/>
+					<img src="images/text2.png" alt="img" class="dis_none"/>
+					<img src="images/text3.png" alt="img" class="dis_none"/>
+				</div>
+				<div class="text_text">
+					<div class="">
+						<!--透明-->
+					</div>
+					<span>快鹿投资轻松管理</span>
+					<span class="dis_none">一键保障您的收益</span>
+					<span class="dis_none">快速转让获取流动资金</span>
+				</div>
+			</div>
+		</div>
+		<!--流程-->
+		<div class="box_wrap bgfff" style="line-height: 154px;">
+			<div class="box_center text_center">
+				<img src="images/liucheng2.jpg" alt="liucheng"/>
+			</div>			
+		</div>
+        <div class="main-wrap">
+            <div class="jiaoyiCenter">
+                <div class="box_center bgfff">
+                	<div class="title">交易中心</div>
+                    <div class="loginTip">
+                    	<img src="images/cansee.jpg">
+                    	<p>登录后可见，请先<a class="col_blue" href="#">登录</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="newsCenter">
+                <div class="box_center clearfix">
+                	<div class="wd580 fl">
+                    	<div class="title clearfix">
+                        	最新动态<a class="fr" href="">更多 &gt;</a>
+                        </div>
+                        <ul id="newsList" class="newsList">
+                        	<li class="clearfix"><a href="#">136****2456认领了10项资产</a><span class="time fr">10分钟前</span></li>
+                            <li class="clearfix"><a href="#">136****2456认领了10项资产</a><span class="time fr">10分钟前</span></li>
+                            <li class="clearfix"><a href="#">136****2456认领了10项资产</a><span class="time fr">10分钟前</span></li>
+                            <li class="clearfix"><a href="#">136****2456认领了10项资产</a><span class="time fr">10分钟前</span></li>
+                            <li class="clearfix"><a href="#">136****2456认领了10项资产</a><span class="time fr">10分钟前</span></li>
+                        </ul>
+                    </div>
+                	<div class="wd580 fr">
+                    	<div class="title clearfix">
+                        	最新公告<a class="fr" href="">更多 &gt;</a>
+                        </div>
+                        <ul id="newsList" class="newsList">
+                        	<li class="clearfix"><a href="#">关于快鹿集团并购金鹿财行和当天金融官方公告</a><span class="time fr">2016-4-26</span></li>
+                            <li class="clearfix"><a href="#">最新线下客户兑付进展情况</a><span class="time fr">2016-4-26</span></li>
+                            <li class="clearfix"><a href="#">IDG项目最新进展情况</a><span class="time fr">2016-4-26</span></li>
+                            <li class="clearfix"><a href="#">4月28日客户接待工作详情</a><span class="time fr">2016-4-26</span></li>
+                            <li class="clearfix"><a href="#">关于启动紧急资金通道的详细事宜</a><span class="time fr">2016-4-26</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+            
+        </div>
+		<!--版权-->
+		<div class="copy_box">
+			版权所有 &copy;XXXXXXXX有限公司 沪ICP备XXXXXXXXXX
+		</div>
+		
+		<script type="text/javascript">
+			var copy = document.getElementsByClassName("copy_box")[0];
+			var copyH = copy.offsetTop;
+			var webH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(copyH<webH){
+				copy.style.position = "fixed";
+				copy.style.bottom = "0";
+			}
+		</script>
+		
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var i = 0;
+			setInterval(function(){
+				
+				$(".text_img img").eq(i).hide("slow");
+				$(".text_img img").eq(i+1).show("slow");
+				$(".text_text span").eq(i).css("left","0").animate({left:'-500',opacity:'0'},600);
+				$(".text_text span").eq(i+1).show().css({left:'0',opacity:'1'});
+				i++;
+				if(i>2){
+					i=0;
+					$(".text_img img").eq(i+2).hide("slow");
+					$(".text_img img").eq(i).show("slow");
+					$(".text_text span").eq(i).css({left:'0',opacity:'1'});
+				}
+			},3000);
+			
+		</script>
+		
+	</body>
+</html>

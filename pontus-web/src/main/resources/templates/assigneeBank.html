@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>交易中心-受让信息</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="/css/tcal.css" />
+		
+		<style type="text/css">
+			.bankInfo ul li a i.bingjing{ background:url(../images/bank/bingjing.png) no-repeat;}
+			.bankInfo ul li a i.guangda{ background:url(../images/bank/guangda.png) no-repeat;}
+			.bankInfo ul li a i.guangfa{ background:url(../images/bank/guangfa.png) no-repeat;}
+			.bankInfo ul li a i.jianshe{ background:url(../images/bank/jianshe.png) no-repeat;}
+			.bankInfo ul li a i.jiaotong{ background:url(../images/bank/jiaotong.png) no-repeat;}
+			.bankInfo ul li a i.minsheng{ background:url(../images/bank/minsheng.png) no-repeat;}
+			.bankInfo ul li a i.pingan{ background:url(../images/bank/pingan.png) no-repeat;}
+			.bankInfo ul li a i.shanghai{ background:url(../images/bank/shanghai.png) no-repeat;}
+			.bankInfo ul li a i.xingye{ background:url(../images/bank/xingye.png) no-repeat;}
+			.bankInfo ul li a i.youzheng{ background:url(../images/bank/youzheng.png) no-repeat;}
+			.bankInfo ul li a i.zhongguo{ background:url(../images/bank/zhongguo.png) no-repeat;}
+			.bankInfo ul li a i.zhongxin{ background:url(../images/bank/zhongxin.png) no-repeat;}
+			.bankInfo ul li a i.nogye{ background:url(../images/bank/nogye.png) no-repeat;}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header" />
+    		<!--我的账户-->
+		<div class="box_center myuser03">
+			<div class="crumbs">
+            	<a th:href="@{/}">首页</a>
+                <span>&gt;</span>
+                <a th:href="@{/qc/center}">交易中心</a>
+                <span>&gt;</span>
+                <span class="current">受让</span>
+            </div>
+			<div class="infoMain">
+			    <div class="fill-info">	
+                    <div class="title02">请选择回款银行卡信息</div>
+                </div>
+                <div class="bankInfo">
+                	<ul class="clearfix">
+                        			<th:block th:each="item : ${banks}">
+                                        <li>
+                                            <a th:class="${item.defaulted==true}?'abank active clearfix':'abank clearfix'" href="javascript:;" name="bankselect" th:attr="bankid=${item.id}">
+                                                <i th:class="|bank fl ${item.cssClass}|"></i>
+                                                <span class="bankname fl">
+                                                    <span class="name" th:text="${item.name}">中国工商银行</span><br/>
+                                                    <span class="num mt_5" th:text="'尾号'+${#strings.substring(item.account,item.account.length()-5,item.account.length())} ">3007&nbsp;&nbsp;储蓄卡</span>
+                                                </span>
+                                                <span class="chose fr mr_20">
+                                                    <i class="icon radio"></i>
+                                                </span>
+                                            </a>
+                                        </li>    
+           							</th:block>
+                        <li>
+                            <a class="addbank"  th:href="@{/cust/addbank}">
+                            	<i class="icon add"></i><br/>
+                            	<span>添加银行卡</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            	<a class="guapaiBtn02 wd228 mt_40" href="javascript:;" id="assigneeConfirm" name="assigneeConfirm">确定</a>
+        	</div>        
+    	</div> 
+    	
+    	<form  action="/assignee/appoint" id="assigneeForm" method="post" style="display:none">
+			<input type="hidden" id="transferId"  name="transferId" th:value="${transferId}" /> 
+			<input type="hidden" id="bankId"  name="bankId" th:value="${banks[0].id}"  />  
+		</form> 
+       		<!--版权-->
+		<div th:replace="fragments/footer" /> 
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>  
+		<script type="text/javascript">
+		// <![CDATA[
+			$("a[name='bankselect']").click(function(){
+				$(".active").removeClass('active');
+				$(this).addClass('active');
+				$("#bankId").val($(this).attr("bankid"));
+				
+			});
+			$("#assigneeConfirm").click(function(){
+				$("#assigneeForm").submit();
+			});
+		
+		// ]]>
+		</script>      
+	</body>
+</html>

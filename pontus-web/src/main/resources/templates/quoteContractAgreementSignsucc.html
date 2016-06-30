@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-我的资产</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='03000')" />
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				个人资料
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03005')" />
+			<div class="msg_main">
+            	<div class="main-title">签署《补充担保协议》</div>
+                <div class="transfer-tip">
+                	<p>已签署补充担保协议，现在资产可以转让了。</p>
+                    <a class="guapaiBtn02 wd228" th:href="@{/qc/transferable}">快去转让</a>
+                </div>
+			</div>
+		</div>
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>	
+        <script src="/js/com.js" type="text/javascript"></script>	
+		
+		<script type="text/javascript">
+			// <![CDATA[
+				
+		// ]]>
+		</script>
+	</body>
+</html>

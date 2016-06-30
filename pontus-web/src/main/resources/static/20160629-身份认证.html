@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.cityselect.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$("#city_1").citySelect({nodata:"none",required:false});
+				$("#city_4").citySelect({prov:"广西", city:"梧州", dist:"蒙山县"});
+			})
+			
+		</script>
+	</head>
+	<body >
+		<!--页头-->
+		<div class="box_wrap header_box">
+			<div class="box_center">
+				<div class="header">
+					<span>客服电话：<span style="color: #ef7523;">400-1236-4562</span></span>
+					<div class="fr">
+						<a href="#">登录</a>
+						<a href="#">注册</a>
+						<a style="color: #ddd;">|</a>
+						<a href="#">消息</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--导航-->
+		<div class="box_wrap nav_box">
+			<div class="box_center cf">
+				<div class="logo fl">
+					<a href="#"><img src="images/logo.png"/></a>
+				</div>
+				<div class="nav fr">
+					<ul>
+						<li>
+							<a href="#">首页</a>
+						</li>
+						<li>
+							<a href="#">交易中心</a>
+						</li>
+						<li>
+							<a href="#">我的账户</a>
+						</li>
+						<li>
+							<a href="#">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<!--登录框-->
+		<div class="mt_24 box_wrap">
+        	<div class="box_center"><div class="sf-approve">您尚未完成身份认证！</div></div>
+			<div class="box_center bgfff text_center" style="padding-top: 30px;">
+				<h3 class="fs_24">身份认证</h3>
+				<img src="images/images/images/wangji.jpg" class="mt_24"/>
+				<div class="sign_box" style="padding-left: 0;padding-bottom: 30px;">
+					<form action="" method="post">
+						<ul class="ul1">
+							<li>
+								<label>姓名：</label>
+								<input type="text" class="ipt" name="" id="" value="" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li>
+								<label>身份证号码：</label>
+								<input type="text" class="ipt" name="" id="" value="" />
+								<span class="col_orange">请输入XXX</span>
+							</li>
+							<li style="margin-bottom: 8px;">
+								<label>居住城市<span class="col_999">(选填)</span>：</label>
+								<div id="city_4" style="display: inline-block;">
+									<select class="prov ipt" style="width: 104px;"></select> 
+									<select class="city ipt" disabled="disabled" style="width: 104px;margin-left: 9px;"></select>
+									<select class="dist ipt" disabled="disabled" style="width: 104px;margin-left: 9px;"></select>
+								</div>
+							</li>
+						</ul>
+						<!--上传照片-->
+						<div style="padding-left: 188px; padding-right: 188px; margin-top: 24px;">
+							<div class="upload_photo" style="padding-left: 10px;">
+								
+								<h3 class="mt_24 fs_24 col_333 text_center">上传照片<span class="fs_14 col_999">(选填)</span></h3>
+								<ul>
+									<li>
+										<p>身份证正面样例</p>
+										<div class="img">
+											<img src="images/images/shenfenzheng1_03.jpg"/>
+										</div>
+										<div class="file_btn">
+											<input type="file" name="" id="" value="" />
+											<a href="#">上传照片</a>
+										</div>
+									</li>
+									<li>
+										<p>身份证正面样例</p>
+										<div class="img">
+											<img src="images/images/shenfenzheng2_03.jpg"/>
+										</div>
+										<div class="file_btn">
+											<input type="file" name="" id="" value="" />
+											<a href="#">上传照片</a>
+										</div>
+									</li>
+									<li>
+										<p>身份证正面样例</p>
+										<div class="img">
+											<img src="images/images/mingpian_03.jpg"/>
+										</div>
+										<div class="file_btn">
+											<input type="file" name="" id="" value="" />
+											<a href="#">上传照片</a>
+										</div>
+									</li>
+								</ul>
+								<span class="col_999" >特别提醒：</span>
+								<p class="col_999" style="line-height: 24px;">身份证上的所有信息清晰可见，必须能看得清证件号；照片内容真实有效，不得做任何修改。支持jpg、bmp、gif、png格式的照片，大小不超过5M。</p>
+								<div class="text_center"><a href="#" class="mt_40 ptbtn ptbtn_orange" style="width: 260px;">立即认证</a></div>
+							</div>
+                            <div class="fals-approve"><i></i>认证失败，请填写信息，重新认证</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<!--版权-->
+		<div class="copy_box">
+			版权所有 &copy;XXXXXXXX有限公司 沪ICP备XXXXXXXXXX
+		</div>
+		
+		<script type="text/javascript">
+			var copy = document.getElementsByClassName("copy_box")[0];
+			var copyH = copy.offsetTop;
+			var webH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(copyH<webH){
+				copy.style.position = "fixed";
+				copy.style.bottom = "0";
+			}
+		</script>
+		
+		<script type="text/javascript">
+			$("input").focus(function(){
+				$(this).css({borderColor:"#68b5ed"});
+			});
+			$("input").blur(function(){
+				$(this).css({borderColor:"#dadada"});
+			});
+		</script>
+		
+	</body>
+</html>

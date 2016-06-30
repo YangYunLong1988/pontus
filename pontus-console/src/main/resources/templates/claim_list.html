@@ -1,0 +1,147 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<title>快鹿投资者服务中心</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>展期协议签署列表</h1>
+
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<p></p>
+							<form onkeydown="submitForm(event)">
+								<div class="row"><input type="text" placeholder="取消只有一个text的时候form默认提交" class="hide"/>
+									<div class="col-xs-3">
+										<div class="form-group">
+											<label>搜索条件:</label>
+
+											<div class="input-group">
+												<input type="text" placeholder="合同来源，协议名称，协议编号，拥有人 合同编号" name="queryAgreement" id="queryAgreement" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" />
+												<div class="input-group-addon">
+													<i class="fa fa-search"></i>
+												</div>
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="form-group">
+											<label>&nbsp;</label>
+											<div class="input-group">
+												<button type="button" onclick="search()" class="btn btn-primary">
+													<i class="fa fa-search"> 搜索</i>
+												</button>
+												&nbsp;&nbsp;
+												<button type="reset" class="btn btn-primary">重置</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<table id="example2" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>序号</th>
+										<th>合同来源</th>
+										<th>产品名称</th>
+										<th>协议名称</th>
+										<th>协议编号</th>
+										<th>拥有人</th>
+										<th>投资本金</th>
+										<th>合同到期日</th>
+										<th>状态</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+
+					<!-- /.box -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</section>
+		<!-- /.content -->
+
+		<!-- DataTables -->
+		<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<!-- page script -->
+		<script>
+ function drawTable(queryData){
+	$('#example2').DataTable({
+		  "paging": true,
+	      "lengthChange": false,
+	      "searching": false,
+	      "ordering": false,
+	      "destroy": true,
+	      "info": true,
+	      "autoWidth": false,
+		  "language": tableslanguage,
+		  serverSide: true,
+		  "ajax":{
+			  "url":"/contract/claim/list",
+			  "type":"post",
+			  "data":queryData,
+			  "timeout":"15000",
+			  "error":handleAjaxError
+		  },
+		  "columns":[
+		             {"data":"id"},
+		             {"data":"platform"},
+				     {"data":"productName"},
+				     {"data":function(data,type,row){var action="";if (null!=data.renewalAgreement){action=data.renewalAgreement.fileName}return action;}},
+				     {"data":function(data,type,row){var action="";if (null!=data.renewalAgreement){action=data.renewalAgreement.objectId}return action;}},
+			         {"data":function(data,type,row){if (null!=data.customer){return '<a href="../customer/details/'+ data.customer.id+'">'+data.customer.username+'</a>';}else{return "";}}},
+			         {"data":"principal"},
+			         {"data":function(data,type,row){var action="";if (null!=data.contractEndDate){action=moment(data.contractEndDate).format('YYYY-MM-DD')}return action;}},
+		             {"data":"id","render":function(data,type,row){var status = row.signState == false?"已认领未签署":"已认领已签署";return status;}},
+		             {"data":"id",
+		              "render":function(data, type, row) {
+			              	var viewProtocol ='<span disabled="">查看协议</span>';
+			              	if (false !=row.signState) {
+			              		viewProtocol ='<a target="_blank" href="/contract/claim/agreementDetailsImages/'+row.renewalAgreement.objectId+'">查看协议</a>';
+				            }
+							return viewProtocol;// +'&nbsp;&nbsp;<a href="javaScript:void(0);">回购</a>';
+						} 
+		             }
+		             ]
+		});
+}
+function search(){
+	drawTable($("form").serializeJson());
+}
+ $(function () {
+  $('.contract').addClass('active');
+  $('.claim').addClass('active');
+  search();
+ });
+
+ /**回车提交**/
+ function submitForm(event) {
+	  if(event.keyCode==13){
+		  search();
+    }
+ }
+</script>
+	</div>
+</body>
+</html>

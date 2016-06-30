@@ -1,0 +1,164 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<title>快鹿投资者服务中心</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<section class="content-header">
+			<h1>附件审核</h1>
+		</section>
+		<section class="content">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<div class="box-header with-border">
+								<h3 class="box-title">基本资料</h3>
+							</div>
+						</div>
+						<div class="box-body">
+						<div class="row">
+				<div class="col-xs-2">
+					<div class="list-group">
+					  <a href="#" data-type="TRANSFER_PROTOCOL" class="list-group-item active">《债权转让协议》</a>
+					  <a href="#" data-type="TRANSFER_NOTIFY_PROTOCOL" class="list-group-item">《债权转让通知函》</a>
+					  <a href="#" data-type="CONFIRM_PROTOCOL" class="list-group-item">《收款确认函》</a>
+					  <a href="#" data-type="PAY_PROTOCOL" class="list-group-item">《支付凭证》</a>
+					</div>
+			    </div>
+			    <div class="col-xs-10">
+							<a href="#" id="protocol" class="thumbnail">
+        					</a>
+			    </div>
+			   
+		      </div>
+						</div>
+						<div class="box-footer">	
+              <p></p>
+              <div class="row">
+				<div class="col-xs-3">
+					
+			    </div>
+			    <div class="col-xs-2">
+			    </div>
+			    <div class="col-xs-2">
+				    <div class="form-group pull-left">
+					    <label>
+		                	<input type="radio" checked="checked" name="opinion" id="agree" />同意
+					    </label>
+	              		</div>
+					<div class="form-group pull-right">
+                		 <label>
+		                	<input  type="radio" name="opinion" id="reject" />拒绝
+					    </label>
+              		</div>
+			    </div>
+			    <div class="col-xs-2">
+			    	
+			    </div>
+			    <div class="col-xs-3">
+					
+			    </div>
+		      </div>
+              <div class="row">
+				<div class="col-xs-4">
+					
+			    </div>
+			    <div class="col-xs-4">
+					<div class="form-group">
+                		<textarea id="reason" rows="5" style="width: 100%" ></textarea>
+              		</div>
+			    </div>
+			    <div class="col-xs-4">
+					
+			    </div>
+		      </div>
+		      
+                <div class="row">
+				<div class="col-xs-4">
+					
+			    </div>
+			    <div class="col-xs-1">
+			    	<div class="form-group">
+                		<button type="button" onclick="window.history.go(-1)" class="btn btn-block btn-primary btn-lg">返回</button>
+              		</div>
+			    </div>
+			    <div class="col-xs-2">
+			    </div>
+			    <div class="col-xs-1">
+			    	<div class="form-group">
+                		<button type="button" onclick="next()" class="btn btn-block btn-primary btn-lg">确认</button>
+              		</div>
+			    </div>
+			    <div class="col-xs-4">
+					
+			    </div>
+		      </div>
+		      
+            </div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<script type="text/javascript" th:inline="javascript">
+			var assigneeId = /*[[${transfer.tradedAssignee.id}]]*/;
+			$(function(){
+				 $('.transfer').addClass('active');
+				 $('.list-group-item').on('click',function(){
+					 $('.list-group .active').removeClass('active');
+					 $(this).addClass('active');
+					 switchProtocol($(this).attr('data-type'));
+				 });
+				 $('.list-group-item')[0].click();
+		    });
+			function switchProtocol(type){
+				$.post("/transfer/protocol",{assigneeId:assigneeId,type:type},function(result){
+					$('#protocol').html('');
+					if (result.success){
+						for(pic in result.data){
+							$('#protocol').append('<img id="protocol" class="img-rounded" data-src="holder.js/100%x180" alt="100%x180" src="/pic/'+result.data[pic].objectId +'" data-holder-rendered="true" style="width: 100%; display: block;" />');
+							$('#protocol').append('<br/>')
+						}
+					}else{
+						common.warning('未找到相关内容......');
+						$('#protocol').append('<img id="protocol" class="img-rounded" data-src="holder.js/100%x180" alt="100%x180" src="/img/placehold.png" data-holder-rendered="true" style="width: 100%; display: block;" />');
+					}
+				})
+			}
+			
+			function next(){
+		    	var id = /*[[${transfer.id}]]*/;
+		    	var opinion = false;
+		    	 $('input[name="opinion"]:checked').each(function(){
+		             if($(this).attr("id")=='agree'){
+		            	 opinion= true;
+		             }else{
+		            	 if($('#reason').val().length==0){
+		            	 	common.warning('请填写拒绝原因');
+		            	 	return;
+		            	 }
+		             }
+		             
+		             $.ajax({
+		                 url: '/assignee/audit/action',
+		                 type: "POST",
+		                 data: {assigneeId:assigneeId,opinion:opinion,reason:$('#reason').val()},
+		                 dataType: "json",
+		                 success: function(data) {
+		                    if(data.success){
+		                    	common.confirm('操作成功,返回到列表？',function(){
+		                    		window.location="/transfer/details/"+id;
+		                    	});
+		                    }else{
+		                    	common.danger(data.firstMessage)
+		                    }
+		                 }
+		             }); 
+		         
+		    	 });
+		    }
+       </script>
+	</div>
+</body>
+</html>

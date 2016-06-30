@@ -1,0 +1,262 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+  <title>内容管理</title>
+</head>
+<body>
+<div layout:fragment="content">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+      <h1>
+        	内容管理
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <p></p>
+              <form action="#">
+               <div class="row">
+               <div class="col-xs-2">
+					<div class="form-group">
+                		<label>搜索条件:</label>
+
+                		<div class="input-group">
+                  			<input type="text" placeholder="公告名称，录入员" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" />
+                  			<div class="input-group-addon">
+                    			<i class="fa fa-search"></i>
+                  			</div>
+                		</div>
+                <!-- /.input group -->
+              		</div>
+			    </div>
+				<div class="col-xs-2">
+					<div class="form-group">
+						<label>排序</label> <select
+							class="form-control select2 select2-hidden-accessible"
+							style="width: 100%;" tabindex="-1" aria-hidden="true">
+							<option selected="selected">时间升序</option>
+							<option>时间将序</option>
+						</select>
+					</div>
+				</div>
+			    
+			    <div class="col-xs-2">
+					<div class="form-group">
+					<label>&nbsp;</label>
+						<div class="input-group">
+							<button type="button" class="btn btn-primary"><i class="fa fa-search"> 搜索</i></button>
+							&nbsp;&nbsp;
+							<button type="button" onclick="add()" class="btn btn-success"><i class="glyphicon glyphicon-plus">添加</i> </button>
+						</div>
+					</div>
+				</div>
+		      </div>
+		      </form>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>公告名称</th>
+                  <th>添加时间</th>
+                  <th>所属板块</th>
+                  <th>录入员</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                  <tr>
+	                  <td>1</td>
+	                  <td>投资者服务中心上线</td>
+	                  <td>2016-05-04</td>
+	                  <td>首页</td>
+	                  <td>李霆</td>
+	                  <td><a>编辑</a>  <a>删除</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+
+<!-- DataTables -->
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+function add(){
+	window.location="/content/editor"
+}
+  $(function () {
+	  $('.content').addClass('active');
+	  $('#example2').DataTable({
+		  "paging": true,
+	      "lengthChange": false,
+	      "searching": false,
+	      "ordering": false,
+	      "info": true,
+	      "autoWidth": false,
+		  "language": tableslanguage/* ,
+		  serverSide: true,
+		  "ajax":{
+			  "url":"/customer/list",
+			  "type":"post",
+			  "timeout":"15000",
+			  "error":handleAjaxError
+		  },
+		  "columns":[
+		             {"data":"id"},
+		             {"data":"platform"},
+		             {"data":"product_name"},
+		             {"data":"product_type"},
+		             {"data":"phone"},
+		             {"data":"owner_name"},
+		             {"data":"principal"},
+		             {"data":"contract_end_date"},
+		             {"data":"phone"},
+		             {"data":"phone"},
+		             {"data":"phone"},
+		             {"data":"phone"},
+		             {"data":"phone"},
+		             {"data":"phone"},
+		             {"data":"id",
+		              "render":function(data, type, row) {
+							return "<a>锁定用户</a>";
+						} 
+		             }
+		             ] */
+		});
+  });
+</script>
+</div>
+</body>
+</html>

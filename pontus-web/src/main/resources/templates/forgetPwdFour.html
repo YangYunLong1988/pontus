@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>忘记密码</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body >
+		<!--页头-->
+		<div th:replace="fragments/header" />
+		
+		<!--登录框-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center bgfff text_center" style="padding-top: 30px;min-height: 500px;">
+				<h3 class="fs_24">忘记密码</h3>
+				<img src="images/images/images/wangji4_03.jpg" class="mt_24"/>
+				<p class="text_center fs_20" style="margin-top: 66px;">
+					<img src="images/images/dui.png"/>
+					密码重置成功！
+				</p>
+				<p style="margin-top: 50px;">
+					<a  href="/" class="indexbtn">去首页</a>
+				</p>
+			</div>
+		</div>
+		
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		// <![CDATA[
+			setTimeout(function(){
+				location.href="/";
+			},3000);
+		// ]]>
+		</script>
+		
+	</body>
+</html>

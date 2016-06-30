@@ -1,0 +1,158 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+  <title>特殊回购</title>
+</head>
+<body>
+<div layout:fragment="content">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+      <h1>
+        	特殊回购列表
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <form onkeydown="submitForm(event)">
+              	 <p></p><input type="text" placeholder="取消只有一个text的时候form默认提交" class="hide"/>
+               <div class="row">
+				<div class="col-xs-2">
+					<div class="form-group">
+						<label>资产来源</label>
+						 <select name="platform"
+							class="form-control select2 select2-hidden-accessible"
+							style="width: 100%;" tabindex="-1" aria-hidden="true">
+							<option selected="selected">全部</option>
+							<option th:each="platform:${platforms}" th:text="${platform}" ></option>
+						</select>
+					</div>
+				</div>
+			    <div class="col-xs-3">
+					<div class="form-group">
+                		<label>搜索条件:</label>
+
+                		<div class="input-group">
+                  			<input type="text" placeholder="姓名，手机号，合同编号" name="query" id="query" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" />
+                  			<div class="input-group-addon">
+                    			<i class="fa fa-search"></i>
+                  			</div>
+                		</div>
+                <!-- /.input group -->
+              		</div>
+			    </div>
+			    
+			    <div class="col-xs-2">
+					<div class="form-group">
+					<label>&nbsp;</label>
+						<div class="input-group">
+							<button type="button" onclick="search()" class="btn btn-primary"><i class="fa fa-search"> 搜索</i></button>
+							&nbsp;&nbsp;
+							<button type="reset" class="btn btn-primary"> 重置 </button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-xs-2 pull-right">
+					<div class="form-group pull-right">
+					<label>&nbsp;</label>
+						<div class="input-group">
+							<a type="button" class="btn btn-success" href="/specialContractDetails/page/-1"><i class="glyphicon glyphicon-plus"> 新建</i></a>
+						</div>
+					</div>
+				</div>
+		      </div>
+		      </form>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>合同编号</th>
+                  <th>购买平台</th>
+                  <th>姓名</th>
+                  <th>手机号码</th>
+                  <th>身份证号码</th>
+                  <th>投资本金</th>
+                  <th>本息和</th>
+                  <th>已兑付金额</th>
+                  <th>操作员</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- DataTables -->
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- page script -->
+<script>
+function drawTable(queryData){
+	  $('#example2').DataTable({
+		  "serverSide": true,
+		  "paging": true,
+	      "lengthChange": false,
+	      "searching": false,
+	      "ordering": false,
+	      "destroy": true,
+	      "info": true,
+	      "autoWidth": false,
+		  "language": tableslanguage ,
+		  "ajax":{
+			  "url":"/specialContract/list",
+			  "type":"post",
+			  "data":queryData,
+			  "timeout":"15000",
+			  "error":handleAjaxError
+		  },
+		  "columns":[
+		             {"data":"id"},
+		             {"data":"originalContract.contractCode"},
+		             {"data":"originalContract.platform"},
+		             {"data":"originalContract.investorName"},
+		             {"data":"originalContract.mobile"},
+		             {"data":"originalContract.certiNo"},
+		             {"data":"originalContract.principal"},
+		             {"data":"originalContract.totalAmount"},
+		             {"data":"buyBackAmount"},
+		             {"data":"createdBy"},
+		             {"data":"id",
+		              "render":function(data, type, row) {
+		            	  return '<a href="/specialContractDetails/page/'+row.id+'">查看</a>';
+						} 
+		             }
+		             ]
+		});
+}
+function search(){
+	drawTable($("form").serializeJson());
+	console.info($("form").serializeJson());
+}
+  $(function () {
+	  $('.buyBack').addClass('active');
+	  $('.special').addClass('active');
+	  search();
+  });
+  /**回车提交**/
+  function submitForm(event) {
+	  if(event.keyCode==13){
+		  search();
+     }
+  }
+</script>
+</div>
+</body>
+</html>

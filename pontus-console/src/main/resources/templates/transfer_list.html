@@ -1,0 +1,189 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<title>转让管理</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>转让管理</h1>
+		</section>
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<form onkeydown="submitForm(event)">
+								<p></p>
+								<div class="row">
+									<div class="col-xs-3">
+										<div class="form-group">
+											<label>搜索条件</label>
+											<div class="input-group">
+												<input type="text" placeholder="转让人姓名,转让人电话,转让编号" name="query" id="qeury" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" />
+												<div class="input-group-addon">
+													<i class="fa fa-search"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="form-group">
+											<label>订单状态</label> <select name="status" id="status" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+												<option selected="selected">全部</option>
+												<option>转让中</option>
+												<option>交易中</option>
+												<option>交易确认中</option>
+												<option>已交易</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="form-group">
+											<label>&nbsp;</label>
+											<div class="input-group date">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<input type="text" class="form-control pull-right" placeholder="申请时间" name="applyTime" id="datepicker" />
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="form-group">
+											<label>&nbsp;</label>
+											<div class="input-group">
+												<button type="button" onclick="search()" class="btn btn-primary">
+													<i class="fa fa-search"> 搜索</i>
+												</button>
+												&nbsp;&nbsp;
+												<button type="reset" class="btn btn-primary">重置</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<table id="transferList" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>序号</th>
+										<th>转让单编号</th>
+										<th>合同编号</th>
+										<th>转让人</th>
+										<th>转让人电话</th>
+										<th>投资本金(元)</th>
+										<th>债券价值(元)</th>
+										<th>到期日期</th>
+										<th>折价率(%)</th>
+										<th>申请日期</th>
+										<th>状态</th>
+										<!-- <th>附件审核</th> -->
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+
+					<!-- /.box -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</section>
+		<!-- /.content -->
+		<!-- DataTables -->
+		<script src="/plugins/datatables/jquery.dataTables.js"></script>
+		<script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<!-- page script -->
+		<script>
+function drawTable(queryData){
+	$('#transferList').DataTable({
+		  serverSide: true,
+		  "paging": true,
+		  "destroy": true,
+	      "lengthChange": false,
+	      "searching": false,
+	      "ordering": false,
+	      "info": true,
+	      "autoWidth": false,
+		  "language": tableslanguage,
+		  "ajax":{
+			  "url":"/transfer/list",
+			  "type":"post",
+			  "data":queryData,
+			  "timeout":"15000",
+			  "error":handleAjaxError
+		  },
+		  "columns":[
+		   		  	 {"data":"id"},
+					 {"data":"code"},
+		             {"data":function(data,type,row){return '<a href="../contract/details/'+ data.originalContractId+'">'+data.contractCode+'</a>';}},
+		             {"data":"idCardName"},
+		             {"data":"phone"},
+		             {"data":"principal"},
+		             {"data":"transferedValue"},
+		             {"data":function(data, type, row){return moment(data.endDate).format('YYYY-MM-DD');}},
+		             {"data":"discountRate"},
+			         {"data":function(data,type,row){return moment(data.createdDate).format('YYYY-MM-DD');}},
+		             {"data":"workFlow"}, 
+		             {"data":function(data, type, row) {
+				             var count =data.assigneeCount;
+			                 var workFlow =data.workFlow;
+				             if ("回访取消"==workFlow || "已取消" == workFlow) {//转让单状态
+				            	 if (parseInt(count) > 0) {
+									return "已 "+count+" 人登记"
+								 }else {
+									return "未登记";
+								 }	
+						     }else if ("转让中" == workFlow){
+						    	 return '未登记&nbsp;&nbsp;<a href="javaScript:void(0);" onClick="changeStatus('+data.id+')">回访取消</a>';
+							 } else if ("转让中" == workFlow || "交易中" == workFlow || "交易确认中" == workFlow) {
+							     return '<a href="/transfer/details/'+data.id+'">已 '+count+' 人登记</a>&nbsp;&nbsp;<a href="javaScript:void(0);" onClick="changeStatus('+data.id+')">回访取消</a>';
+						     }else if ("已交易" == workFlow) {
+								 return '<a href="/transfer/details/'+data.id+'">已 '+count+' 人登记</a>';
+							 }
+				        
+		             } }
+		             ]
+		});
+}
+function search(){
+	drawTable($("form").serializeJson());
+}
+  $(function () {
+	  $('.transfer').addClass('active');
+	  search();
+	  initDatePicker($('#datepicker'));
+  });
+  // 修改转让状态
+  function changeStatus(id) {
+	  common.confirm("您确认要 取消回访？",function(){
+		  $.post("/transfer/changeStatus",{id:id},function(data){
+				if (data.success){
+					common.success(data.firstMessage);
+				}else{
+					common.danger(data.firstMessage);
+				}
+				$('#transferList').DataTable().ajax.reload(null,false);
+			})
+	  })
+  }
+  /**回车提交**/
+  function submitForm(event) {
+ 	  if(event.keyCode==13){
+ 		  search();
+     }
+  }
+</script>
+	</div>
+</body>
+</html>

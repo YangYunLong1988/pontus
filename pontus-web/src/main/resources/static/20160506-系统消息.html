@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-系统信息</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body>
+		<!--页头-->
+		<div class="box_wrap header_box">
+			<div class="box_center">
+				<div class="header">
+					<span>客服电话：<span style="color: #ef7523;">400-1236-4562</span></span>
+					<div class="fr">
+						<a href="#">登录</a>
+						<a href="#">注册</a>
+						<a style="color: #ddd;">|</a>
+						<a href="#">消息</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--导航-->
+		<div class="box_wrap nav_box">
+			<div class="box_center cf">
+				<div class="logo fl">
+					<a href="#"><img src="images/logo.png"/></a>
+				</div>
+				<div class="nav fr">
+					<ul>
+						<li>
+							<a href="#">首页</a>
+						</li>
+						<li>
+							<a href="#">交易中心</a>
+						</li>
+						<li  class="active">
+							<a href="#">我的账户</a>
+						</li>
+						<li>
+							<a href="#">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div class="myuser_nav">
+				<ul>
+					<li>
+						<a href="#">用户中心</a>
+					</li>
+					<li>
+						<a href="#">个人资料</a>
+					</li>
+					<li>
+						<a href="#">身份认证</a>
+					</li>
+					<li>
+						<a href="#">安全设置</a>
+					</li>
+					<li>
+						<a href="#">我的资产</a>
+					</li>
+					<li class="current">
+						<a href="#">系统消息</a>
+					</li>
+				</ul>
+			</div>
+			<div class="msg_main">
+				<div class="main-title">系统消息</div>
+				<ul class="msg">
+                	<li class="cf">
+                    	<div class="msg-title fl"><a class="fw800" href="#">您成功挂牌了编号000001资产</a></div>
+                        <div class="msg-mark fr">
+                        	<span class="time">22分钟前</span>
+                            <a class="mark unread" href="javascript:;">标记已读</a>
+                        </div>
+                    </li>
+                    <li>
+                    	<div class="msg-title fl"><a href="#">您成功挂牌了编号000002资产</a></div>
+                        <div class="msg-mark fr">
+                        	<span class="time">1天前</span>
+                            <a class="mark read" href="javascript:;">删除</a>
+                        </div>
+                    </li>
+                    <li>
+                    	<div class="msg-title fl"><a href="#">您成功挂牌了编号000002资产</a></div>
+                        <div class="msg-mark fr">
+                        	<span class="time read">2天前</span>
+                            <a class="mark read" href="javascript:;">删除</a>
+                        </div>
+                    </li>
+                    <li>
+                    	<div class="msg-title fl"><a href="#">您成功挂牌了编号000002资产</a></div>
+                        <div class="msg-mark fr">
+                        	<span class="time">4天前</span>
+                            <a class="mark read" href="javascript:;">删除</a>
+                        </div>
+                    </li>
+                </ul>
+			</div>
+		</div>
+		<!--版权-->
+		<div class="copy_box">
+			版权所有 &copy;XXXXXXXX有限公司 沪ICP备XXXXXXXXXX
+		</div>
+		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>	
+		
+		<script type="text/javascript">
+			var copy = document.getElementsByClassName("copy_box")[0];
+			var copyH = copy.offsetTop;
+			var webH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(copyH<webH){
+				copy.style.position = "fixed";
+				copy.style.bottom = "0";
+			}
+			$(function(){
+				$("a.mark").click(function(){
+					if($(this).hasClass('read')){
+						$(this).parents('li').remove();
+						}else{
+							$(this).parent('.msg-mark').siblings('.msg-title').children('a').removeClass('fw800');
+							$(this).text("删除").removeClass('unread').addClass('read');
+							}
+					});
+				});
+		</script>
+		
+		
+	</body>
+</html>

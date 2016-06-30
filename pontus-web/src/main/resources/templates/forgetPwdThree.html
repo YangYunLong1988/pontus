@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>忘记密码</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<style type="text/css">
+		.error{
+			color:#ef7523;
+		}
+		label[for]{
+			text-align:left;
+		}
+		</style>
+	</head>
+	<body >
+		<!--页头-->
+		<div th:replace="fragments/header" />
+		
+		<!--登录框-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center bgfff text_center" style="padding-top: 30px;min-height: 500px;">
+				<h3 class="fs_24">忘记密码</h3>
+				<img src="images/images/images/wangji3_03.jpg" class="mt_24"/>
+				<div class="sign_box">
+					<form id="formId" action="/forget-pwd-four" method="post">
+						<ul class="">
+							<li class="ml_130">
+								<input type="password" class="ipt col_999" name="password" id="password" placeholder="请输入新密码" maxlength="16"/>
+							</li>
+							<li class="ml_130">
+								<input type="password" class="ipt col_999" name="password2" id="password2" placeholder="确认密码" maxlength="16"/>
+							</li>
+							<li class="mt_40 ml_130">
+								<a id="nextStepId" href="javascript:;" class="ptbtn ptbtn_orange" style="width: 338px;line-height: 40px;font-size: 16px;">下一步</a>
+							</li>
+						</ul>
+						<input  name="phone" style="display:none" th:value="${phone}"/>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+		
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		// <![CDATA[
+			
+			$("input").focus(function(){
+				$(this).css({borderColor:"#68b5ed"});
+				if($(this).val() == this.defaultValue){
+					$(this).val("").css({color:"#333"});
+				}
+			});
+			$("input").blur(function(){
+				$(this).css({borderColor:"#dadada"});
+				if($(this).val() == ""){
+					$(this).val(this.defaultValue).css({color:"#999",borderColor:"#dadada"});
+				}
+			});
+			
+			//提交表单
+			$("#nextStepId").click(function(){
+				clearError();
+				if($(".error").length==0){
+					$("#formId").submit();
+				}
+			});
+			
+			function clearError(){
+				$("label[for]").each(function(){
+					if($(this).text()==""){
+						$(this).remove();
+					}
+				})
+			}
+		// ]]>
+		</script>
+		
+		<script type="text/javascript">
+		// <![CDATA[
+		jQuery.validator.addMethod("rightPWD", function(value, element) {
+			var ptn = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+			return this.optional(element) || (ptn.test(value));
+		}, "必须是字母和数字组合！");
+		
+		$(function(){
+			$("#formId").validate({
+				errorPlacement:function(error,element){
+					error.appendTo(element.parent());
+				},
+				rules: {
+					password: {
+						required: true,
+						rightPWD:true,
+						rangelength: [6,16],
+					},
+					password2: {
+						required: true,
+						equalTo: "#password"
+					}
+				},
+				messages: {
+					password: {
+						required: "请输入密码！",
+						rightPWD:"6-16位字母和数字组合！",
+						rangelength: $.validator.format( "密码长度必须介于  {0} 和 {1}位！" ),
+					},
+					password2: {
+						required: " ",
+						equalTo: "密码不一致！"
+					}
+				}
+			});
+		});
+		// ]]>
+		</script>
+		
+	</body>
+</html>

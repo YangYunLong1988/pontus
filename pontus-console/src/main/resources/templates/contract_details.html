@@ -1,0 +1,148 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+  <title>合同详情</title>
+</head>
+<body>
+<div layout:fragment="content">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+      <h1>
+        	合同详情
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+           		<div class="box-header with-border">
+              <h3 class="box-title">基本资料</h3>
+            </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+           			<div class="col-xs-1"></div>
+           			<div class="col-xs-3">
+           			<div class="form-horizontal">
+           				<div class="form-group">
+							<label class="col-sm-4 control-label">姓名:</label>
+	                        <div class="form-control-static" th:text="${contract.investorName}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">手机号码:</label>
+	                        <div class="form-control-static" th:text="${contract.mobile}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">身份证号码:</label>
+	                       <div class="form-control-static" th:text="${contract.certiNo}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">未还利息:</label>
+	                        <div class="form-control-static" th:text="${contract.unPayedInterest}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">合同编号:</label>
+	                        <div class="form-control-static" th:text="${contract.contractCode}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">产品名称:</label>
+	                         <div class="form-control-static" th:text="${contract.productName}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">年化收益率(%):</label>
+	                         <div class="form-control-static" th:text="${contract.yearIrr}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">购买平台:</label>
+	                        <div class="form-control-static" th:text="${contract.platform}"></div>
+						</div>
+						</div>
+					</div>
+           			<div class="col-xs-3">
+           			<div class="form-horizontal">
+           				<div class="form-group">
+							<label class="col-sm-4 control-label">投资本金:</label>
+	                        <div class="form-control-static" th:text="${contract.principal}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">收益:</label>
+	                        <div class="form-control-static" th:text="${contract.profit}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">合同到期日:</label>
+	                        <div  class="form-control-static" th:text="${contract.contractEndDate}">张三</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">本息和:</label>
+	                        <div class="form-control-static" th:text="${contract.totalAmount}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">期限:</label>
+	                        <div class="form-control-static" th:text="${contract.term}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">还款方式:</label>
+	                        <div class="form-control-static" th:text="${contract.paybackType}"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">保障方式:</label>
+	                        <div class="form-control-static" th:text="${contract.ensureType}"></div>
+						</div>
+						</div>
+           			</div>
+           		</div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">协议文件</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="bs-example bs-example-images" data-example-id="image-shapes">
+			  	<a th:each="attachment:${attachments}" target="_blank" th:href="'/pic/'+${attachment.objectId}">
+    				<img data-src="holder.js/140x140" class="img-rounded" alt="140x140" th:src="'/pic/'+${attachment.objectId}" data-holder-rendered="true" style="width: 140px; height: 140px;" />
+  			  	</a>
+			  </div>
+            </div>
+            <div class="box-footer">	
+              <p></p>
+                <div class="row">
+				<div class="col-xs-3">
+					
+			    </div>
+			    <div class="col-xs-2">
+			    </div>
+			    <div class="col-xs-2">
+					<div class="form-group">
+                		<button type="button" onclick="window.history.go(-1)" class="btn btn-block btn-primary btn-lg">返回</button>
+              		</div>
+			    </div>
+			    <div class="col-xs-2">
+			    </div>
+			    <div class="col-xs-3">
+					
+			    </div>
+		      </div>
+		      
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+</body>
+</html>

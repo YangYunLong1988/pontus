@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>我的账户-我的资产</title>
+<link rel="stylesheet" type="text/css" href="/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/css/index.css" />
+<style type="text/css">
+	.protocolStep .testGetCode a.disabled{
+	    background-color: #ccc;
+    	border-color: #ccc;
+    	color: #fff;
+    }
+   	label.error {
+		color: #ef7523;
+		width: inherit;
+		margin-left: 10px;
+	}
+</style>
+</head>
+<body>
+	<!--页头-->
+	<div th:replace="fragments/header(current='03000')" />
+	<!--我的账户-->
+	<div class="box_wrap myuser_title">
+		<div class="box_center">个人资料</div>
+	</div>
+	<div class="box_center myuser">
+		<div class="myuser_nav">
+			<div th:replace="fragments/left(current='03005')" />
+		</div>
+		<div class="msg_main">
+			<div class="main-title">签署《补充担保协议》</div>
+			<div class="assetTag">
+				资产编号<span>125896</span>
+			</div>
+			<div class="assetProtocol">
+				<img th:each="item : ${agreementImages}" th:src="|data:image/jpg;base64,${item}|" width="100%" />
+			</div>
+			<div class="protocolStep">
+				<form id="agreementSignForm" th:action="@{/qc/agreement-sign(id=${contract.id})}" method="post" >
+				<div class="chose">
+					<input type="checkbox" checked="checked" name="markRead" id="markRead" />我已阅读并同意签署该协议
+					<label class="error" for="markRead"><th:block th:if="${msg=='签约失败'}">签约失败，请稍后再试</th:block></label>
+				</div>
+				<!--已签署
+                    <div class="mt_40">
+                   		<a class="signBtn wd340 signbg01" href="javascript:;">已签署</a>
+                    </div>
+                     -->
+				
+					<div class="testGetCode">
+						<input type="text" placeholder="请输入短信验证码" name="code" id="code"/> <a id="getCodeMsg" class="getCode codeBd01" href="javascript:;" style="width: 140px;">获取短信验证码<!--重发短信验证码--></a> <span></span>
+						<label class="error" for="code"><th:block th:if="${msg=='验证输入错误'}">验证码输入错误</th:block></label>
+					</div>
+					<div class="getCodeTip">
+						<!--短信验证码错误-->
+					</div>
+					<input type="hidden" name="id" id="contractId" th:value="${contract.id}" />
+					<div class="mt_40">
+						<a class="signBtn wd340 signbg02" href="javascript:;" app-submit="agreementSignForm">提交</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--版权-->
+	<div th:replace="fragments/footer" />
+	<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/com.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		// <![CDATA[
+		            
+		$("#agreementSignForm").validate({
+			ignore : ".ignore",
+			rules : {
+				markRead:{
+					required : true
+				},
+				code : {
+					required : true
+				}
+			},
+			messages : {
+				markRead:{
+					required : "请同意签署该协议"
+				},
+				code : {
+					required : "请输入短信验证码"
+				}
+			}
+		});
+		            
+			$("#getCodeMsg").on("click",function(){
+				var param = {"id":$("#contractId").val()};
+				if($(this).hasClass("disabled")){
+					return;
+				}
+				$(this).addClass("disabled");
+				$.get("/qc/send-signcode",param,function(result){
+					if(result.code==0){
+						startCountDown(30)
+					}else{
+						$(this).removeClass("disabled");		
+					}
+				});
+			});
+			
+			function startCountDown(count) {
+				$("#getCodeMsg").text("重新发送（"+count+"）");
+				count -= 1;
+				if(count<=0){
+					$("#getCodeMsg").text("获取短信验证码");
+					$("#getCodeMsg").removeClass("disabled");
+				}else{
+					setTimeout("startCountDown(" + count + ")", 1000);
+				}
+			}
+			
+		// ]]>
+	</script>
+</body>
+</html>

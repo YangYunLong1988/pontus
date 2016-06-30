@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>登录</title>
+<link rel="stylesheet" type="text/css" href="/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/css/index.css" />
+</head>
+<body>
+	<!--页头-->
+	<div th:replace="fragments/header" />
+		<!--资产列表-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center asset_list">
+				<div class="transfer-tip">
+                	<div class="errorimg mt_40"><img src="/images/500.jpg" /></div>
+                	<div class="fs_26 col_333 mt_40">抱歉！页面无法访问。</div>
+                    <div class="col_999 fs_16"><span class="col_orange" id="addsuccess">3</span>秒后<a class="col_blue ml_20" th:href="@{/}">返回首页</a></div>
+                </div>
+			</div>
+		</div>
+
+	<!--版权-->
+	<div th:replace="fragments/footer" />
+	<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+					// <![CDATA[
+				$(function(){
+					Load();
+				});
+				var secs = 3; //倒计时的秒数 
+				function Load(){
+     				for(var i=secs;i>=0;i--){
+       					window.setTimeout('doUpdate(' + i + ')', (secs-i) * 1000);
+     					}
+ 					}
+
+				function doUpdate(num){ 
+				  document.getElementById('addsuccess').innerHTML =num;
+				  if(num==0){
+					  location.href="/";
+				  }
+				}
+				
+				// ]]>
+	</script>
+</body>
+</html>

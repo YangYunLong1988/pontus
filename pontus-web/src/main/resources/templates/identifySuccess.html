@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的资产-身份认证</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<style type="text/css">
+		.error{
+			color:#ef7523;
+		}
+		label[for]{
+			text-align:left;
+		}
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header" ></div>
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left" ></div>
+			<div class="msg_main">
+				<div class="main-title">身份认证成功!</div>
+				<div class="transfer-tip">
+                	<p>已经认证成功，现在可以浏览网站了。</p>
+                    <a class="guapaiBtn02 wd228" href="/">去首页</a>
+                </div>
+			</div>
+		</div>
+		<div th:replace="fragments/footer" ></div>
+		
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		// <![CDATA[
+
+		// ]]>
+		</script>
+	</body>
+</html>

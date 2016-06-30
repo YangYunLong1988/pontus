@@ -1,0 +1,188 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+<title>挂牌预约管理</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>挂牌预约管理</h1>
+
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<p></p>
+							<form onkeydown="submitForm(event)">
+								<div class="row">
+									<div class="col-xs-3">
+										<div class="form-group">
+											<label>搜索条件:</label>
+
+											<div class="input-group">
+												<input type="text" name="query" id="query" placeholder="产品名称，证件号码，所属人姓名  合同编号" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" />
+												<div class="input-group-addon">
+													<i class="fa fa-search"></i>
+												</div>
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="form-group">
+											<label>状态</label> <select name="workFlow" id="workFlow" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+												<option selected="selected">全部</option>
+												<option th:each="flow:${flows}" th:text="${flow}" ></option>
+											</select>
+										</div>
+									</div>
+									<div class="col-xs-2">
+										<div class="form-group">
+											<label>申请日期</label>
+											<div class="input-group date">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<input type="text" name="applyDate" class="form-control pull-right" id="datepicker" />
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
+
+									<div class="col-xs-2">
+										<div class="form-group">
+											<label>&nbsp;</label>
+											<div class="input-group">
+												<button type="button" onclick="search()" class="btn btn-primary">
+													<i class="fa fa-search"> 搜索</i>
+												</button>
+												&nbsp;&nbsp;
+												<button type="reset" class="btn btn-primary">重置</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<table id="example2" class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>序号</th>
+										<th>购买平台</th>
+										<th>产品名称</th>
+										<th>申请人</th>
+										<th>手机号</th>
+										<th>证件号码</th>
+										<th>申请时间</th>
+										<th>投资本金</th>
+										<th>状态</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+
+					<!-- /.box -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</section>
+		<!-- /.content -->
+
+		<!-- DataTables -->
+		<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="/plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<!-- page script -->
+		<script>
+  function drawTable(queryData){
+		console.info(queryData);
+		$('.contract').addClass('active');
+		  $('.reservation').addClass('active');
+		  $('#example2').DataTable({
+			  "paging": true,
+		      "lengthChange": false,
+		      "searching": false,
+		      "destroy": true,
+		      "ordering": false,
+		      "info": true,
+		      "autoWidth": false,
+			  "language": tableslanguage ,
+			  serverSide: true,
+			  "ajax":{
+				  "url":"/contract/reservation/list",
+				  "type":"post",
+				  "data":queryData,
+				  "timeout":"15000",
+				  "error":handleAjaxError
+			  },
+			  "columns":[
+			             {"data":"id"},
+			             {"data":"platform"},
+			             {"data":"productName"},
+			             {"data":"customer.idCardName"},
+			             {"data":"customer.phone"},
+			             {"data":"customer.idCardAccount"},
+			             {"data":function(data, type, row){
+		            	 			return moment(data.createdDate).format('YYYY-MM-DD');
+	             		         }
+			             },
+			             {"data":"principal"},
+			             {"data":"workFlow"},
+			             {"data":"id",
+			              "render":function(data, type, row) {
+			            	  if(row.workFlow=='待审核'){
+			            	  	return '<a href="#" onclick="check('+row.id+')">审核</a>';
+			            	  }else if(row.workFlow=='未通过'){
+			            		  return '<a href="/contract/reservation/details/'+row.id+'">查看</a>';
+			            	  }else{
+			            		  return null;
+			            		  
+			            	  }
+							} 
+			             }
+			             ]
+	});
+  }
+function search(){
+	drawTable($("form").serializeJson());
+}
+function check(id){
+	 $.post("/contract/reservation/audit/check",{id:id},function(data){
+			if (data.success){
+				window.location = "/contract/reservation/details/"+id;
+			}else{
+				common.danger(data.firstMessage);
+				$('#example2').DataTable().ajax.reload(null,false);
+			}
+		});
+}
+ $(function () {
+  $('.contract').addClass('active');
+  $('.reservation').addClass('active');
+  search();
+  initDatePicker($('#datepicker'));
+ });
+ /**回车提交**/
+ function submitForm(event) {
+	  if(event.keyCode==13){
+		  search();
+    }
+ }
+</script>
+	</div>
+</body>
+</html>

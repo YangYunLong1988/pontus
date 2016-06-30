@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<style type="text/css">
+		.error{
+			color:#ef7523;
+		}
+		label[for]{
+			text-align:left;
+			width:200px;
+		}
+		.dis_sumbit{
+			background-color:#9E9793;
+		}
+		</style>
+	</head>
+	<body >
+		<!--页头-->
+		<div th:replace="fragments/header" ></div>
+		
+		<!--登录框-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center bgfff text_center" style="padding-top: 30px;">
+				<h3 class="fs_24">注册</h3>
+				<img src="/images/images/zhuce1_03.jpg" class="mt_24"/>
+				<div class="sign_box">
+					<form id="registerForm" action="/regist-id-auth" method="post">
+						<ul>
+							<li>
+								<label>手机号：</label>
+								<input type="text" class="ipt" name="phone" id="phone" value="" maxlength="11"/>
+							</li>
+							<li>
+								<label>密码：</label>
+								<input type="password" class="ipt" name="password" id="password" value="" maxlength="16"/>
+							</li>
+							<li>
+								<label>密码确认：</label>
+								<input type="password" class="ipt" name="password2" id="password2" value="" maxlength="16"/>
+							</li>
+							<li>
+								<label>验证码：</label>
+								<input type="text" class="ipt" name="imgCode" id="imgCode" value="" style="width: 190px;" maxlength="5"/>
+								<div style="margin-left: 8px; display: inline-block;vertical-align: top; width: 136px;height: 42px;line-height: 42px; text-align: center; background-color: #f8f8f8;">
+									<img id="changeImgCode" alt="ValidateCode" src="kaptcha" style="width:140px;height:40px;" onclick="changeVerifyCode();"/>
+								</div>
+							</li>
+							<li>
+								<label>短信验证码：</label>
+								<input type="text" class="ipt" name="code" id="code" value="" style="width: 190px;margin-right: 8px;" maxlength="6"/>
+								<input type="button" class="regbtn" id="sendCode" value="发送验证码" />
+							</li>
+							<li style="margin-bottom: 8px;">
+								<label>电子邮箱<span class="col_999">(选填)</span>：</label>
+								<input type="text" class="ipt" name="email" id="email" value="" />
+							</li>
+							<li style="padding-left: 136px;">
+								<input type="checkbox" name="confirmed" id="agreeSignal" value="" />阅读并同意 <a href="/attachment/registerprotocal.pdf" class="col_blue a_line" target ="_blank" style="text-decoration:none;">《注册协议》</a>
+							</li>
+							<li style="padding-left: 136px;">
+								<a href="javascript:;" id="nextStepId" class="ptbtn dis_sumbit" style="width: 338px;line-height: 40px;font-size: 16px;">下一步</a>
+							</li>
+						</ul>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!--版权-->
+		<div th:replace="fragments/footer" ></div>
+		
+	<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	// <![CDATA[
+		//UI自定义操作
+		var checkimg=true;
+		var checkphone=true;
+		
+		$("input").focus(function(){
+			$(this).css({borderColor:"#68b5ed"});
+		});
+		$("input").blur(function(){
+			$(this).css({borderColor:"#dadada"});
+		});
+		
+		//是否同意协议
+		$("#agreeSignal").change(function(){
+			if($(this).is(":checked")){
+				$("#nextStepId").removeClass("dis_sumbit").addClass("ptbtn_orange");
+			}else{
+				$("#nextStepId").removeClass("ptbtn_orange").addClass("dis_sumbit");
+			}
+		});
+		
+		//绑定验证码与发送手机验证码按钮
+		$("#imgCode").on("keyup",function(){
+			var value=$("#imgCode").val();
+			if(value.length==5 && checkimg){
+				clearError();
+				var vphone=$("#phone").val();
+				var cphone=$("#phone-error");
+				$.post('/check-img-code',{'code':$('#imgCode').val()},function(data){
+					if(data && vphone.length==11 && cphone.length==0){
+						$("#sendCode").removeClass("regbtn").addClass("regbtn1");
+						checkimg=false;
+					}else{
+						$("#sendCode").removeClass("regbtn1").addClass("regbtn");
+						checkimg=true;
+					}
+				});
+			}
+		});
+		
+		//绑定手机与发送手机验证码按钮
+		$("#phone").on("keyup",function(){
+			var value=$("#phone").val();
+			if(value.length==11 && checkphone){
+				clearError();
+				var vimg=$("#imgCode").val();
+				var cimg=$("#imgCode-error");
+				$.post('/check-unique-phone',{'phone':$('#phone').val()},function(data){
+					if(data && vimg.length==5 && cimg.length==0){
+						$("#sendCode").removeClass("regbtn").addClass("regbtn1");
+						checkphone=false;
+					}else{
+						$("#sendCode").removeClass("regbtn1").addClass("regbtn");
+						checkphone=true;
+					}
+				});
+			}
+		});
+		
+		//验证码倒计时60s
+		var wait=60;  
+		function time(self) {  
+		        if (wait == 0) {  
+		        	$(self).removeClass("regbtn").addClass("regbtn1");           
+		        	$(self).val("发送验证码");  
+		            wait = 60;  
+		        } else {  
+		        	$(self).removeClass("regbtn1").addClass("regbtn");   
+		        	$(self).val("重新发送(" + wait + ")s");  
+		            wait--;  
+		            setTimeout(function() {  
+		                time(self);  
+		            },1000);
+		        }  
+		    }  
+		
+		//点击发送验证码事件
+		$("#sendCode").on("click",function(){
+			if($(".regbtn").length>0){
+				return ;
+			}
+			
+			time(this);
+			
+			$.post('/send-phone-code',{'phone':$('#phone').val(),'imgCode':$('#imgCode').val()},function(data){
+				if(data.code==0){
+					;
+				}else{
+					alert('验证码发送失败!');
+				}
+			},'json');
+		});
+		
+		//点击更新图片验证码
+		function changeVerifyCode(){
+			$("#changeImgCode").attr("src","kaptcha?t="+Math.random());
+		}
+		
+		//提交表单
+		$("#nextStepId").click(function(){
+			clearError();
+			if($(".error").length==0 && $(".dis_sumbit").length==0){
+				$("#registerForm").submit();
+				$("#nextStepId").addClass("dis_sumbit");
+			}
+		});
+		
+		function clearError(){
+			$("label[for]").each(function(){
+				if($(this).text()==""){
+					$(this).remove();
+				}
+			})
+		}
+	
+		//自定义验证方法
+		jQuery.validator.addMethod("isMobile", function(value, element) {
+			var length = value.length;
+			var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+			return this.optional(element) || (length == 11 && mobile.test(value));
+		}, "手机号码有误！");
+		
+		
+		jQuery.validator.addMethod("rightPWD", function(value, element) {
+			var ptn = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+			return this.optional(element) || (ptn.test(value));
+		}, "必须是字母和数字组合！");
+				
+		$(function(){
+			$("#registerForm").validate({
+				errorPlacement:function(error,element){
+					error.appendTo(element.parent());
+				},
+				rules: {
+					phone : {
+						required : true,
+						isMobile : true,
+						remote:{
+							url:"/check-unique-phone",
+							type:"POST",
+							data:{
+								phone:function(){return $("#phone").val();}
+							}
+						}
+					},
+					password: {
+						required: true,
+						rightPWD: true,
+						rangelength: [6,16],
+					},
+					password2: {
+						required: true,
+						equalTo: "#password"
+					},
+					imgCode:{
+						required: true,
+						remote:{
+							url:"/check-img-code",
+							type:"POST",
+							data:{
+								code:function(){return $("#imgCode").val();}
+							}
+						}
+					},
+					code:{
+						required: true,
+						remote:{
+							url:"/check-phone-vcode",
+							type:"POST",
+							data:{
+								phone:function(){return $("#phone").val();},
+								code:function(){return $("#code").val();}
+							}
+						}
+					},
+					email: {
+						email: true
+					}
+				},
+				messages: {
+					phone : {
+						required : "请输入手机号!",
+						isMobile : "手机号码有误！",
+						remote: "手机号已被注册!"
+					},
+					password: {
+						required: "请输入密码！",
+						rightPWD:"6-16位字母和数字组合！",
+						rangelength: $.validator.format( "密码长度必须介于  {0} 和 {1}位！" ),
+					},
+					password2: {
+						required: " ",
+						equalTo: "密码不一致！"
+					},
+					imgCode:{
+						required: "请输入验证码！",
+						remote: "验证码有误！"
+					},
+					code:{
+						required: "请输入短信验证码！",
+						remote: "手机验证码有误！"
+					},
+					email: {
+						email: "邮件格式有误！"
+					}
+				}
+			});
+		});
+		
+		// ]]>
+	</script>	
+	</body>
+</html>

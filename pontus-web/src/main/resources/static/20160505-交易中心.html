@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>交易中心</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body>
+		<!--页头-->
+		<div class="box_wrap header_box">
+			<div class="box_center">
+				<div class="header">
+					<span>客服电话：<span style="color: #ef7523;">400-1236-4562</span></span>
+					<div class="fr">
+						<a href="#">登录</a>
+						<a href="#">注册</a>
+						<a style="color: #ddd;">|</a>
+						<a href="#">消息</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--导航-->
+		<div class="box_wrap nav_box">
+			<div class="box_center cf">
+				<div class="logo fl">
+					<a href="#"><img src="images/logo.png"/></a>
+				</div>
+				<div class="nav fr">
+					<ul>
+						<li>
+							<a href="#">首页</a>
+						</li>
+						<li class="active">
+							<a href="#">交易中心</a>
+						</li>
+						<li>
+							<a href="#">我的账户</a>
+						</li>
+						<li>
+							<a href="#">帮助中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--资产列表-->
+		<div class="mt_24 box_wrap">
+			<div class="box_center asset_list">
+				<div class="choose">
+					<ul>
+						<li>
+							<span class="col_999">渠道：</span>
+							<div class="current">不限</div>
+							<div>魔环电影</div>
+							<div>趣豆理财</div>
+							<div>宝驼贷</div>
+						</li>
+						<li>
+							<span class="col_999">收益方式：</span>
+							<div class="current">不限</div>
+							<div>到期一次性还本付息</div>
+							<div>按月付息到期还本</div>
+							<div>按月还本付息</div>
+						</li>
+					</ul>
+				</div>
+				
+				<h3 class="mt_24 fs_20">资产列表</h3>
+				
+				<table border="0" cellspacing="0" cellpadding="0" width="100%" class="asset_table">
+					
+					<tr>
+						<th class="pl_20">资产编号</th>
+						<th>渠道</th>
+						<th>产品类型</th>
+						<th>产品名称/编号</th>
+						<th>年化收益率</th>
+						<th>剩余期限</th>
+						<th>收益方式</th>
+						<th>资产价值</th>
+						<th>保障方式</th>
+					</tr>
+					<tr>
+						<td class="pl_20">000001</td>
+						<td>魔环电影</td>
+						<td>电影投</td>
+						<td>《上海王》电影享乐计划1号076-270</td>
+						<td class="col_orange">13%</td>
+						<td>115天</td>
+						<td>到期一次性还本付息</td>
+						<td>5,102.00元</td>
+						<td>本息全额担保</td>
+					</tr>
+					<tr>
+						<td class="pl_20">000001</td>
+						<td>魔环电影</td>
+						<td>电影投</td>
+						<td>《上海王》电影享乐计划1号076-270</td>
+						<td class="col_orange">13%</td>
+						<td>115天</td>
+						<td>到期一次性还本付息</td>
+						<td>5,102.00元</td>
+						<td>本息全额担保</td>
+					</tr>
+					<tr>
+						<td class="pl_20">000001</td>
+						<td>魔环电影</td>
+						<td>电影投</td>
+						<td>《上海王》电影享乐计划1号076-270</td>
+						<td class="col_orange">13%</td>
+						<td>115天</td>
+						<td>到期一次性还本付息</td>
+						<td>5,102.00元</td>
+						<td>本息全额担保</td>
+					</tr>
+					<tr>
+						<td class="pl_20">000001</td>
+						<td>魔环电影</td>
+						<td>电影投</td>
+						<td>《上海王》电影享乐计划1号076-270</td>
+						<td class="col_orange">13%</td>
+						<td>115天</td>
+						<td>到期一次性还本付息</td>
+						<td>5,102.00元</td>
+						<td>本息全额担保</td>
+					</tr>
+				</table>
+				
+				<!--翻页-->
+				<div class="mt_24 text_center">
+					<ul class="yl-pagination" id="yl-pagination">
+						<li class="first">
+							<a href="#">&lt;</a>
+						</li>
+						<li class="current">
+							<a href="#">1</a>
+						</li>
+						<li>
+							<a href="#">2</a>
+						</li>
+						<li>
+							<a href="#">3</a>
+						</li>
+						<li>
+							<a href="#">4</a>
+						</li>
+						<li>
+							<a href="#">5</a>
+						</li>
+						<li>
+							<a href="#">6</a>
+						</li>
+						<li class="ver-top" style="padding-top: 22px;text-align: center; box-sizing: border-box; line-height: 0;">...</li>
+						<li>
+							<a href="#">12</a>
+						</li>
+						<li class="last">
+							<a href="#">&gt;</a>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+		<!--版权-->
+		<div class="copy_box">
+			版权所有 &copy;XXXXXXXX有限公司 沪ICP备XXXXXXXXXX
+		</div>
+		
+		<script type="text/javascript">
+			//判断全屏
+			var copy = document.getElementsByClassName("copy_box")[0];
+			var copyH = copy.offsetTop;
+			var webH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(copyH<webH){
+				copy.style.position = "fixed";
+				copy.style.bottom = "0";
+			}
+			
+			//翻页js
+			var ylpagination = document.getElementById("yl-pagination").getElementsByTagName("li");
+			for (var i= 1; i<ylpagination.length-1 ; i++) {
+				ylpagination[i].onclick = function(){
+					for (var i= 1; i<ylpagination.length-1 ; i++) {
+						ylpagination[i].className = '';
+					}
+					this.className = 'current';
+				}
+			}
+			
+			//资产选择
+			var choose = document.getElementsByClassName("choose")[0];
+			var chooseSon = choose.getElementsByTagName("div");
+			for( var i = 0; i<chooseSon.length; i++){
+				chooseSon[i].onclick = function(){
+					
+					var thisparent = this.parentNode.getElementsByTagName("div");
+					for(var i = 0; i<thisparent.length; i++){
+						thisparent[i].className = '';
+					}
+					this.className = "current";
+				};
+			};
+		</script>
+		
+	</body>
+</html>

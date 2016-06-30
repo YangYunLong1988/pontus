@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-安全设置</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<style type="text/css">
+			label.error{
+				color:#ef7523;
+				margin-left: 10px;
+			}
+		.bankInfo ul li a i.bingjing{ background:url(../images/bank/bingjing.png) no-repeat;}
+		.bankInfo ul li a i.guangda{ background:url(../images/bank/guangda.png) no-repeat;}
+		.bankInfo ul li a i.guangfa{ background:url(../images/bank/guangfa.png) no-repeat;}
+		.bankInfo ul li a i.jianshe{ background:url(../images/bank/jianshe.png) no-repeat;}
+		.bankInfo ul li a i.jiaotong{ background:url(../images/bank/jiaotong.png) no-repeat;}
+		.bankInfo ul li a i.minsheng{ background:url(../images/bank/minsheng.png) no-repeat;}
+		.bankInfo ul li a i.pingan{ background:url(../images/bank/pingan.png) no-repeat;}
+		.bankInfo ul li a i.shanghai{ background:url(../images/bank/shanghai.png) no-repeat;}
+		.bankInfo ul li a i.xingye{ background:url(../images/bank/xingye.png) no-repeat;}
+		.bankInfo ul li a i.youzheng{ background:url(../images/bank/youzheng.png) no-repeat;}
+		.bankInfo ul li a i.zhongguo{ background:url(../images/bank/zhongguo.png) no-repeat;}
+		.bankInfo ul li a i.zhongxin{ background:url(../images/bank/zhongxin.png) no-repeat;}
+		.bankInfo ul li a i.nogye{ background:url(../images/bank/nogye.png) no-repeat;}
+		
+		</style>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='03000')" />
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				我的账户
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03004')" />
+			<div class="msg_main">
+			<div class="my-assets">
+                <ul class="tab-title tab-head cf">
+                    <li><a th:href="@{/cust/change-password}" href="#">修改密码</a></li>
+                    <li class="active">银行卡设置</li>
+                </ul>
+                <ul class="pw-content tab-content">
+                <li style="display:block;">
+                        	<div class="returnBank">
+                                <div class="col_999 mt_20">请您选择最终回款的银行卡</div>
+                                <div class="bankInfo" style=" margin-top:20px;">
+                                    <ul class="clearfix">
+                        			<th:block th:each="item : ${banks}">
+                                        <li >
+                                            <a class="abank active clearfix" th:class="${item.defaulted==true}?'abank active clearfix':'abank clearfix'" th:href="@{/cust/defaultbank-change(id=${item.id})}">
+                                                <i th:class="|bank fl ${item.cssClass}|"></i>
+                                                <span class="bankname fl">
+                                                    <span class="name" th:text="${item.name}">中国工商银行</span><br/>
+                                                    <span class="num mt_5" th:text="'尾号'+${#strings.substring(item.account,item.account.length()-5,item.account.length())} ">3007&nbsp;&nbsp;储蓄卡</span>
+                                                </span>
+                                                <span class="chose fr mr_20">
+                                                    <i class="icon radio"></i>
+                                                </span>
+                                            </a>
+                                        </li>    
+                        
+                        			</th:block>            
+                               
+                                        
+                                        <li >
+                                            <a class="addbank" th:href="@{/cust/addbank}">
+                                                <i class="icon add"></i><br/>
+                                                <span>添加银行卡</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>                
+                
+                </li>
+                </ul>
+            </div>
+         </div>
+		</div>
+		<div th:replace="fragments/footer" />
+		<script src="/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		</script>
+		
+	</body>
+</html>

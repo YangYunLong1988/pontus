@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的账户-我的资产-转让详情</title>
+		<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/tiptool.css"/>
+	</head>
+	<body>
+		<!--页头-->
+		<div th:replace="fragments/header(current='03000')" />
+		<!--我的账户-->
+		<div class="box_wrap myuser_title">
+			<div class="box_center">
+				个人资料
+			</div>
+		</div>
+		<div class="box_center myuser">
+			<div th:replace="fragments/left(current='03005')" />
+			<div class="msg_main">
+            	<div class="main-title">合同详情</div>
+                <div class="guapaiInfo clearfix" th:if="${contract!=null}">
+                	<div class="wd50 fl">
+                    	<ul>
+                            <li><span>购买平台：</span><th:block th:text="${contract.platform}"></th:block></li>
+                            <li><span>合同编号：</span><th:block th:text="${contract.contractCode}"></th:block></li>
+                            <li><span>投资本金：</span><th:block th:if="${contract.principal}" th:text="${#numbers.formatDecimal(contract.principal, 0, 'COMMA', 2, 'POINT')}"></th:block><i>元</i></li>
+                            <li><span>合同到期日：</span><th:block th:if="${contract.contractEndDate}" th:text="${#dates.format(contract.contractEndDate, 'yyyy/MM/dd')}"></th:block></li>
+                            <li><span>未还利息：</span><th:block th:if="${contract.unPayedInterest}"><th:block th:text="${#numbers.formatDecimal(contract.unPayedInterest, 0, 'COMMA', 2, 'POINT')}"></th:block><i>元</i></th:block></li>
+                            <li><span>本息和：</span><th:block th:if="${contract.totalAmount}"><th:block th:text="${#numbers.formatDecimal(contract.totalAmount, 0, 'COMMA', 2, 'POINT')}"></th:block><i>元</i></th:block></li>
+                    	</ul>
+                    </div>
+                    <div class="wd50 fl">
+                    	<ul>
+                            <li><span>产品名称：</span><th:block th:if="${contract.productName}"><th:block th:text="${contract.productName}"></th:block></th:block></li>
+                            <li><span>年化收益率：</span><th:block th:if="${contract.yearIrr}"><th:block th:text="${contract.yearIrr}"></th:block> <i>%</i></th:block></li>
+                            <li><span>期限：</span><th:block th:if="${contract.term}"><th:block th:text="${contract.term}"></th:block> <i>天</i></th:block></li>
+                            <li><span>起息日：</span><th:block th:if="${contract.interestStartDate}" th:text="${#dates.format(contract.interestStartDate, 'yyyy/MM/dd')}"></th:block></li>
+                            <li><span>到期利息：</span><th:block th:if="${contract.profit}"><th:block th:text="${#numbers.formatDecimal(contract.profit, 0, 'COMMA', 2, 'POINT')}"></th:block><i>元</i></th:block></li>
+                            <li><span>还款方式：</span><th:block th:if="${contract.paybackType}"><th:block th:text="${contract.paybackType}"></th:block></th:block></li>
+                        </ul>
+                    </div>
+                    <ul>
+                    	<li><span>协议附件：</span>
+                            	<a class="col_blue checkunuploadFile" href="javascript:;">
+                            	《债权转让回购协议》
+		                            <div class="flagDiv"  style="display:none;">
+										<span th:each="itemId:${transferIds}" th:text="${itemId}"></span>
+									</div>
+                            	</a>
+                            	<a class="col_blue checkunuploadFile" href="javascript:;">
+                            	《担保承诺函》
+		                            <div class="flagDiv"  style="display:none;">
+										<span th:each="itemId:${transferIds}" th:text="${itemId}"></span>
+									</div>
+                            	</a>
+                            	<a class="col_blue aimage" href="javascript:;">
+                            	《补充担保协议》
+		                            <div class="flagDiv"  style="display:none;">
+										<img th:each="item : ${images}" th:src="|data:image/jpg;base64,${item}|"/>
+									</div>
+                            	</a>
+                            </li>
+                        </ul>
+                </div>
+                
+                <div class="main-title mt_40">特殊兑付详情</div>
+                <table border="0" cellspacing="0" cellpadding="0" width="100%" class="asset_table02">
+                    <tr>
+                        <th class="pl_20">序号</th>
+                        <th>特殊兑付金额（元）</th>
+                        <th>付款日期</th>
+                        <th>特殊兑付原因</th>
+                    </tr>
+                    <tr th:each="item : ${specialDetails}">
+                        <td class="pl_20" th:text="${itemStat.count}"></td>
+                        <td th:text="${item.dealAmount==null}?'':${#numbers.formatDecimal(item.dealAmount, 0, 'COMMA', 2, 'POINT')}">0.00</td>
+                        <td th:text="${item.dealDate==null}?'':${#dates.format(item.dealDate, 'yyyy-MM-dd')}">2016-10-01</td>
+                        <td>
+                        	<span th:if="${#strings.length(item.dealReason) le 8}" th:text="${item.dealReason}" th:title="${item.dealReason}"></span>
+                        	<span th:if="${#strings.length(item.dealReason) gt 8}" th:text="${#strings.substring(item.dealReason,0,9)+'...'}" th:title="${item.dealReason}"></span>
+                        </td>
+                    </tr>
+                    
+                </table>
+                <div th:if="${specialDetails.isEmpty()}" class="no-assets" style="display: block;">
+                	<h3>当前您暂时没特殊回购</h3>
+                </div>
+			</div>
+		</div>
+
+		<div class="shade-box" id="errorTipView" style="display: none;">
+		<div class="shade">
+			<div class="tclose">
+			</div>
+			<div class="tip" style="text-align: center;">
+				<div style="margin-left: 0"></div>
+				<span class="tipContent"></span>
+			</div>
+			<div class="shade-btn" style="text-align: center;">
+				<a href="javascript:;" class="queding" style="margin-left: 0;margin-top: 20px;">确定</a>
+			</div>
+		</div>
+		</div>		
+		<!--版权-->
+		<div th:replace="fragments/footer" />
+		
+		<div class="mask"></div>
+		 <div id="seekFile" class="adduploadFile dis_none">
+		 	<div class="title cf">
+		    	<div class="fl ml_5">
+		            <a id="preBtn" class="bdfBtn" href="javascript:;">前一张</a>
+		            <a id="nextBtn" class="bdfBtn" href="javascript:;">后一张</a>
+		        </div>
+		    	<div class="fr">
+		            <a  id="fullscreenBtn" class="bdfBtn" href="javascript:;">全屏</a>
+		            <a  class="bdfBtn cclose" href="javascript:;">关闭</a>
+		        </div>
+		    </div>
+		    <div class="file-img">
+		    	<img id="show-file-img" src="" width="100%" height="100%"/>
+		    </div>
+		 </div> 
+        
+		<script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/com.js" type="text/javascript"></script>		
+		
+		<script type="text/javascript">
+		// <![CDATA[
+		//提示框
+		$('#errorTipView .tclose,#errorTipView .queding').click(function(){
+			$('#errorTipView').hide();
+		});
+		
+		$("a.checkunuploadFile").click(function(){
+			if($(this).find('.flagDiv span').length==0){
+				$('#errorTipView .tipContent').html("没有附件协议!");
+		        $('#errorTipView').show();
+				return;
+			}
+			$(".mask").fadeIn(800);
+			$("#seekFile").fadeIn(800);
+			doprint(this);
+		});
+		
+		$("a.aimage").click(function(){
+			if($(this).find('img').length==0){
+				$('#errorTipView .tipContent').html("没有附件协议!");
+		        $('#errorTipView').show();
+				return;
+			}
+			$(".mask").fadeIn(800);
+			$("#seekFile").fadeIn(800);
+			doimageslide(this);
+		});
+		
+			
+		$(".mask").click(function(){
+			$(".mask").fadeOut(800);
+			$("#seekFile").fadeIn(800);
+		})
+		
+		$("#fullscreenBtn").click(function(){
+			$("#seekFile").addClass('adduploadFile02');
+		});	
+		
+		$("a.cclose,.ensure a.guapaiBtn02").click(function(){
+			  $(".mask").fadeOut(800);
+			  $(".adduploadFile").fadeOut(800);
+			  setTimeout(function(){
+				  $("#seekFile").removeClass('adduploadFile02');
+			  },800);
+		});
+		
+		function doprint(self){
+			var spn="";
+			spn = $(self).find('.flagDiv span');
+			var len = spn.length;
+			var index = 0;
+			var preBtn = $("#preBtn");
+			var nextBtn = $("#nextBtn");
+			var showimg = function(i){
+				var objectId=spn.eq(i).text();
+				$("#show-file-img").attr("src","/transfer/get?objId="+objectId);
+			}
+			
+			showimg(0);
+			$("#show-file-img").fadeIn();
+			
+			preBtn.addClass('color99');
+			nextBtn.removeClass('color99');
+			if(len==1){
+				console.log(len);
+				preBtn.addClass('color99');
+				nextBtn.addClass('color99');
+			}
+			
+			nextBtn.click(function(){
+				if(len==1){
+					return;
+				}
+				if(index >= len-2){
+					index =len-1;
+					showimg(index);
+					nextBtn.addClass('color99');
+				}else{	
+					showimg(++index);
+					preBtn.removeClass('color99');
+				}
+			});
+			preBtn.click(function(){
+				if(len==1){
+					return;
+				}
+				if(index <= 1){
+					index = 0;
+					preBtn.addClass('color99');
+					showimg(index);
+				}else{
+					nextBtn.removeClass('color99');
+					showimg(--index);
+				}
+			});
+		}
+		
+		function doimageslide(self){
+			var spn="";
+			spn = $(self).find('img');
+			var len = spn.length;
+			var index = 0;
+			var preBtn = $("#preBtn");
+			var nextBtn = $("#nextBtn");
+			var showimg = function(i){
+				var isrc=spn.eq(i).attr("src");
+				console.log(isrc);
+				$("#show-file-img").attr("src",isrc);
+			}
+			
+			showimg(0);
+			$("#show-file-img").fadeIn();
+			
+			preBtn.addClass('color99');
+			nextBtn.removeClass('color99');
+			if(len==1){
+				console.log(len);
+				preBtn.addClass('color99');
+				nextBtn.addClass('color99');
+			}
+			
+			nextBtn.click(function(){
+				if(len==1){
+					return;
+				}
+				if(index >= len-1){
+					index =len-1;
+					showimg(index);
+					nextBtn.addClass('color99');
+				}else{	
+					showimg(++index);
+					preBtn.removeClass('color99');
+				}
+			});
+			preBtn.click(function(){
+				if(len==1){
+					return;
+				}
+				if(index <= 0){
+					index = 0;
+					preBtn.addClass('color99');
+					showimg(index);
+				}else{
+					nextBtn.removeClass('color99');
+					showimg(--index);
+				}
+			});
+		}
+		
+		// ]]>
+	</script>
+	</body>
+</html>
